@@ -16,6 +16,7 @@ SECRET_KEY = '($efc_3&$$(!8!t2i@dfffs2ophfjope!f)zb!sm3-164dk*v&'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '*',
     'NUGU-play-FAFA.eba-tsuiq7em.us-west-2.elasticbeanstalk.com',
     '127.0.0.1',
     'localhost',]
