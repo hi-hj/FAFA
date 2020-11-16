@@ -25,7 +25,10 @@ SECRET_KEY = '($efc_3&$$(!8!t2i@dfffs2ophfjope!f)zb!sm3-164dk*v&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'NUGU-play-FAFA.eba-tsuiq7em.us-west-2.elasticbeanstalk.com',
+    '127.0.0.1',
+    'localhost',]
 
 
 # Application definition
@@ -79,7 +82,7 @@ WSGI_APPLICATION = 'NUGU.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
     }
 }
 
