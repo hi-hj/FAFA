@@ -2,9 +2,10 @@ import React from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import Styled from 'styled-components/native';
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 
-const Container = Styled.ScrollView`
-  flex: 1;
+const Container = Styled.View`
+    flex: 1;
 `;
 
 const StyleButton = Styled.TouchableOpacity`
@@ -26,13 +27,8 @@ const Map = ({ navigation }:Props) => {
 
   return (
     <Container>
-      <StyleButton
-        onPress={()=> {
-            _logout();
-        }
-        }>
-        <Icon source={require('~/Assets/Images/ic_logout.png')} />
-      </StyleButton>
+      <MapView style={{flex: 1}} provider={PROVIDER_GOOGLE} 
+      />
     </Container>
   );
 };
