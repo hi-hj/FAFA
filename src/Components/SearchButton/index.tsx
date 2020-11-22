@@ -2,12 +2,11 @@ import React from 'react';
 import Styled from 'styled-components/native';
 
 const StyleButton = Styled.TouchableOpacity`
-  width: 100%;
+  width: 15%;
   height: 40px;
   border-radius: 10px;
   justify-content: center;
   align-items: center;
-  border: 1px;
   background-color: #009dff;
   border-color: #e8eaed;
 `;
@@ -21,7 +20,7 @@ interface Props {
   onPress?: () => void;
 }
 
-const Button = ({label, style, onPress}: Props) => {
+const SearchButton = ({label, style, onPress}: Props) => {
   return (
     <StyleButton style={style} onPress={onPress}>
       <Label>{label}</Label>
@@ -29,5 +28,4 @@ const Button = ({label, style, onPress}: Props) => {
   );
 };
 
-
-export default Button;
+export default SearchButton;

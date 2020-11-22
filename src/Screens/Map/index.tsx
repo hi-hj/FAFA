@@ -5,6 +5,9 @@ import Styled from 'styled-components/native';
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import Geolocation from 'react-native-geolocation-service';
 
+import SearchInput from '~/Components/SearchInput';
+import SerchButton from '~/Components/SearchButton';
+import SearchButton from '~/Components/SearchButton';
 
 const Container = Styled.View`
     flex: 2;
@@ -14,6 +17,12 @@ const Container = Styled.View`
 const StyleButton = Styled.TouchableOpacity`
   padding: 8px;
 `;
+
+const SearchStyle = Styled.View`
+  margin-top: 10px;
+  flexDirection: row;
+  `;
+
 const Icon = Styled.Image`
 `;
 
@@ -75,6 +84,15 @@ const Map = ({ navigation }:Props) => {
         />
       </MapView>
     )}
+    <SearchStyle>
+    <SearchInput style={{marginBottom: 16,
+    marginLeft: 7
+    }} />
+    <SearchButton 
+    label="확인"
+    style={{marginLeft: 5}}
+    />
+    </SearchStyle>
   </Container>
   );
 };

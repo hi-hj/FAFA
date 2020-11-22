@@ -72,7 +72,7 @@ const Login = ({navigation}: Props) => {
 };
 
 Login.navigationOptions = {
-  title: "Login",
+  title: "NUGU",
   headerTrasnparent: true,
   headerTintColor: '#171616',
   headerTitleStyle: {
