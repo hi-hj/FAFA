@@ -71,4 +71,13 @@ const Login = ({navigation}: Props) => {
   );
 };
 
+Login.navigationOptions = {
+  title: "Login",
+  headerTrasnparent: true,
+  headerTintColor: '#171616',
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
+};
+
 export default Login;

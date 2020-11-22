@@ -7,7 +7,8 @@ import Geolocation from 'react-native-geolocation-service';
 
 
 const Container = Styled.View`
-    flex: 1;
+    flex: 2;
+    margin:10px;
 `;
 
 const StyleButton = Styled.TouchableOpacity`
@@ -29,7 +30,15 @@ interface ILocation {
 const Map = ({ navigation }:Props) => {
   const [location, setLocation] = useState<ILocation | undefined>(undefined);
 
+  const _logout = () => {
+      AsyncStorage.removeItem('key');
+      navigation.navigate('LoginNavigator');
+  }
+
   useEffect(() => {
+    navigation.setParams({
+      logout: _logout,
+    });
     Geolocation.getCurrentPosition(
       position => {
         const {latitude, longitude} = position.coords;
@@ -45,10 +54,6 @@ const Map = ({ navigation }:Props) => {
     );
   }, []);
 
-  const _logout = () => {
-      AsyncStorage.removeItem('key');
-      navigation.navigate('LoginNavigator');
-  }
   return (
     <Container>
     {location && (
@@ -74,13 +79,35 @@ const Map = ({ navigation }:Props) => {
   );
 };
 
-Map.navigatonOptions = {
-  title: 'FAFA',
-  headerTransparent: true,
-  headerTintColor: '#ffffff',
-  headerTitleStyle: {
-      fontWeight: 'bold,'
+interface INaviProps {
+  navigation: NavigationScreenProp<NavigationState>;
+}
+
+
+Map.navigationOptions = ({ navigation }: INaviProps ) => {
+  const logout = navigation.getParam('logout');
+  return {
+  title: 'NUGU',
+  headerTintColor:'#141414',
+  headerStyle:{
+    backgroundColor: '#ffffff',
+    borderBottomWidth: 0.5,
   },
+  headerTitleStyle: {
+      fontWeight: 'bold',
+  },
+  headerBackTitle: null,
+  headerLeft: (
+        <StyleButton
+        onPress={()=> {
+          if (logout && typeof logout === 'function'){
+            logout();
+          }
+        }}>
+        <Icon source={require('~/Assets/Images/ic_logout.png')} />
+      </StyleButton>
+  ),
 };
+}; 
 
 export default Map;

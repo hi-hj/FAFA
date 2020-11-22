@@ -36,12 +36,7 @@ const CheckLogin =  ({ navigation }: Props) => {
 };
 
 CheckLogin.navigationOptions = {
-    title: 'FAFA',
-    headerTransparent: true,
-    headerTintColor: '#ffffff',
-    headerTitleStyle: {
-        fontWeight: 'bold,'
-    },
+    header: null,
 };
 
 export default CheckLogin;
