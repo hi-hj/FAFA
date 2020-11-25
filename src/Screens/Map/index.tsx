@@ -135,6 +135,7 @@ Geolocation.watchPosition(
         }}>
           <Marker
             title= "current"
+            image={require('~/Assets/Images/current.png')}
             coordinate={{
               latitude: currentLocation.latitude,
               longitude: currentLocation.longitude,
@@ -144,6 +145,7 @@ Geolocation.watchPosition(
             homeLocation && (
               <Marker
               title= "Home"
+              image={require('~/Assets/Images/home.png')}
               coordinate={{
               latitude: homeLocation.latitude,
               longitude: homeLocation.longitude,
@@ -155,6 +157,7 @@ Geolocation.watchPosition(
             companyLocation && (
               <Marker
               title= "Company"
+              image={require('~/Assets/Images/business.png')}
               coordinate={{
               latitude: companyLocation.latitude,
               longitude: companyLocation.longitude,
