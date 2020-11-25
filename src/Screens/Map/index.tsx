@@ -42,7 +42,6 @@ const Map = ({ navigation }:Props) => {
   const [currentLocation, setcurrentLocation] = useState<ILocation | undefined>(undefined);
   const [homeLocation, sethomeLocation] = useState<ILocation>();
   const [companyLocation, setcompanyLocation] = useState<ILocation>();
-  const [change, setchange] = useState<boolean>(true);
 
   const _logout = () => {
       AsyncStorage.removeItem('key');
@@ -73,6 +72,24 @@ const Map = ({ navigation }:Props) => {
       console.log(err)
     }
 }
+
+Geolocation.watchPosition(
+  position => {
+    const {latitude, longitude} = position.coords;
+    console.log("100");
+    setcurrentLocation({latitude, longitude});
+  },
+  error => {
+    console.log(error);
+  },
+  {
+    enableHighAccuracy: true,
+    distanceFilter: 100,
+    interval: 30000,
+    fastestInterval: 2000,
+  },
+);
+
 
 
     
@@ -168,9 +185,7 @@ const Map = ({ navigation }:Props) => {
           console.log(error.code, error.message);
         },
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-      );
-    setchange(!change);
-    
+      );    
     }}
     />
     <SearchButton 
@@ -195,8 +210,6 @@ const Map = ({ navigation }:Props) => {
         },
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
       );
-    setchange(!change);
-    
     }}
     />
     </SearchStyle>
