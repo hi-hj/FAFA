@@ -9,6 +9,7 @@ import Geolocation from 'react-native-geolocation-service';
 import SearchInput from '~/Components/SearchInput';
 import SerchButton from '~/Components/SearchButton';
 import SearchButton from '~/Components/SearchButton';
+import { add } from 'react-native-reanimated';
 
 const Container = Styled.View`
     flex: 2;
@@ -35,88 +36,120 @@ interface Props {
 interface ILocation {
   latitude: number;
   longitude: number;
-  name: string;
 }
 
 const Map = ({ navigation }:Props) => {
-  const [locations, setLocation] = useState<Array<ILocation>>([]);
+  const [currentLocation, setcurrentLocation] = useState<ILocation | undefined>(undefined);
+  const [homeLocation, sethomeLocation] = useState<ILocation>();
+  const [companyLocation, setcompanyLocation] = useState<ILocation>();
+  const [change, setchange] = useState<boolean>(true);
 
   const _logout = () => {
       AsyncStorage.removeItem('key');
+      AsyncStorage.clear();
       navigation.navigate('LoginNavigator');
   }
 
+    
+  
+
   useEffect(() => {
-    navigation.setParams({
-      logout: _logout,
-    });
+
     Geolocation.getCurrentPosition(
       position => {
         const {latitude, longitude} = position.coords;
-        const name = "now";
-        setLocation([...locations,{
+        setcurrentLocation({
           latitude,
           longitude,
-          name
-        }]);
+        })
+        console.log(currentLocation);
       },
       error => {
         console.log(error.code, error.message);
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
-  }, [locations]);
+
+    navigation.setParams({
+      logout: _logout,
+    });
+
+
+  }, [change]);
 
   return (
     <Container>
-    {locations.length > 0 && (
+    { currentLocation && (
       <MapView
         provider={PROVIDER_GOOGLE}
         style={{flex: 1}}
         initialRegion={{
-          latitude: locations[0].latitude,
-          longitude: locations[0].longitude,
+          latitude: currentLocation.latitude,
+          longitude: currentLocation.longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}>
-        <Marker
-          coordinate={{
-            latitude: locations[0].latitude,
-            longitude: locations[0].longitude,
-          }}
-          title= {locations[0].name}
-        />
+          <Marker
+            title= "current"
+            coordinate={{
+              latitude: currentLocation.latitude,
+              longitude: currentLocation.longitude,
+            }}
+          />
+          {
+            homeLocation && (
+              <Marker
+              title= "Home"
+              coordinate={{
+              latitude: homeLocation.latitude,
+              longitude: homeLocation.longitude,
+            }}
+          />
+            )
+          }
+          {
+            companyLocation && (
+              <Marker
+              title= "Company"
+              coordinate={{
+              latitude: companyLocation.latitude,
+              longitude: companyLocation.longitude,
+            }}
+          />
+            )
+          }
       </MapView>
     )}
     <SearchStyle>
-    <SearchInput style={{marginBottom: 16,
-    marginLeft: 7
-    }} />
+    <SearchButton
+    label="Home"
+    onPress={() => {
+    const home  = {
+      latitude: 37.5628379,
+      longitude: 127.0449174,
+    }
+    sethomeLocation(home);
+    setchange(!change);
+    
+    }}
+    />
     <SearchButton 
-    label="Check"
+    label="Company"
     style={{marginLeft: 5}}
     onPress={() => {
-      console.log('fetch start!');
-      fetch('http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/location/', {
-  method: 'POST', // or 'PUT'
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ name: "hi", geoX:"1", geoY:"2" }),
-})
-.then(response => response.json())
-.then(data => {
-  console.log('Success:', data);
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
+      const company  = {
+        latitude: 37.5628375,
+        longitude: 127.0383513,
+      }
+      setcompanyLocation(company);
+      setchange(!change);
       
-    }}
+      }}
     />
     </SearchStyle>
   </Container>
   );
+
 };
 
 interface INaviProps {
@@ -151,3 +184,21 @@ Map.navigationOptions = ({ navigation }: INaviProps ) => {
 }; 
 
 export default Map;
+
+
+
+/* console.log('fetch start!');
+fetch('http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/location/', {
+method: 'POST', // or 'PUT'
+headers: {
+'Content-Type': 'application/json',
+},
+body: JSON.stringify({ name: "hi", geoX:"1", geoY:"2" }),
+})
+.then(response => response.json())
+.then(data => {
+console.log('Success:', data);
+})
+.catch((error) => {
+console.error('Error:', error);
+}); */
