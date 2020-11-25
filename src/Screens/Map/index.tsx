@@ -50,11 +50,37 @@ const Map = ({ navigation }:Props) => {
       navigation.navigate('LoginNavigator');
   }
 
+  const initHome = async () => {
+      try {
+        console.log("home");
+        const list = await AsyncStorage.getItem('home');
+        if (list !== null) {
+          sethomeLocation(JSON.parse(list));
+        }
+      } catch (err) {
+        console.log(err)
+      }
+  }
+
+  const initCompany = async () => {
+    try {
+      console.log("company");
+      const list = await AsyncStorage.getItem('company');
+      if (list !== null) {
+        setcompanyLocation(JSON.parse(list));
+      }
+    } catch (err) {
+      console.log(err)
+    }
+}
+
+
     
   
 
   useEffect(() => {
-
+    initCompany();
+    initHome();
     Geolocation.getCurrentPosition(
       position => {
         const {latitude, longitude} = position.coords;
@@ -75,7 +101,8 @@ const Map = ({ navigation }:Props) => {
     });
 
 
-  }, [change]);
+  }, []);
+
 
   return (
     <Container>
@@ -124,11 +151,24 @@ const Map = ({ navigation }:Props) => {
     <SearchButton
     label="Home"
     onPress={() => {
-    const home  = {
-      latitude: 37.5628379,
-      longitude: 127.0449174,
-    }
-    sethomeLocation(home);
+      Geolocation.getCurrentPosition(
+        position => {
+          const {latitude, longitude} = position.coords;
+          sethomeLocation({
+            latitude,
+            longitude,
+          })
+          AsyncStorage.setItem('home', JSON.stringify({
+            latitude,
+            longitude,
+          })); 
+          console.log(homeLocation);
+        },
+        error => {
+          console.log(error.code, error.message);
+        },
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      );
     setchange(!change);
     
     }}
@@ -137,14 +177,27 @@ const Map = ({ navigation }:Props) => {
     label="Company"
     style={{marginLeft: 5}}
     onPress={() => {
-      const company  = {
-        latitude: 37.5628375,
-        longitude: 127.0383513,
-      }
-      setcompanyLocation(company);
-      setchange(!change);
-      
-      }}
+      Geolocation.getCurrentPosition(
+        position => {
+          const {latitude, longitude} = position.coords;
+          setcompanyLocation({
+            latitude,
+            longitude,
+          })
+          AsyncStorage.setItem('company', JSON.stringify({
+            latitude,
+            longitude,
+          })); 
+          console.log(companyLocation);
+        },
+        error => {
+          console.log(error.code, error.message);
+        },
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      );
+    setchange(!change);
+    
+    }}
     />
     </SearchStyle>
   </Container>
