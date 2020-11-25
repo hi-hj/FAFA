@@ -8,7 +8,6 @@ const StyleButton = Styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   background-color: #009dff;
-  border-color: #e8eaed;
 `;
 const Label = Styled.Text`
   color: #FFFFFF;

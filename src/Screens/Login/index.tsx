@@ -38,6 +38,12 @@ interface Props {
   navigation: NavigationScreenProp<NavigationState>;
 }
 
+interface ILocation {
+  latitude: number;
+  longitude: number;
+  name: String;
+}
+
 
 const Login = ({navigation}: Props) => {
   return (
