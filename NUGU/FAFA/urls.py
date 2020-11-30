@@ -15,6 +15,7 @@ urlpatterns = [
     path('health', views.health, name='health'),
     #path('ask.location', views.a1_location, name='ask.location'),
     path('ask.location', views.a2_location, name='ask.location'),
+    path('a3_location', views.a3_location, name='a3_location'),
     #path('login/', views.login),
 
 ]

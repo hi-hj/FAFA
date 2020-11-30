@@ -32,10 +32,22 @@ def health(request):
 def a2_location(request):
     result = {}
     nugu_body = json.loads(request.body, encoding='utf-8')
+    pprint.pprint(nugu_body)
     result = nugu_body
     result['resultCode'] = 'OK'
     result['output'] = {'name':'회사'}
     pprint.pprint(result)
+    return JsonResponse(result)
+
+def a3_location(request):
+    result ={}
+    nugu_body = json.loads(request.body, encoding='utf-8')
+    pprint.pprint(nugu_body)
+    FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME').get('value')
+    result['version'] = nugu_body.get('version')
+    result['resultCode'] = 'OK'
+    result['output'] = {'FAMILY_NAME':FAMILY_NAME,
+                        'name':'회사' }
     return JsonResponse(result)
 
 
