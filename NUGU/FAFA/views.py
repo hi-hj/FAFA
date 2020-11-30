@@ -51,9 +51,9 @@ def a1_location(request):
     con_dict = model_to_dict(context)
     context = json.dumps(con_dict, ensure_ascii=False, sort_keys=False, separators=(',', ':')).encode('utf-8')
     result['version'] ='2.0'
-    result['output'] = json.loads(context, encoding='utf-8')
-    result['STATUS'] ='200 OK'
     result['resultCode'] = 'OK'
+    result['output'] = json.loads(context, encoding='utf-8')
+    #result['STATUS'] ='200 OK'
     return JsonResponse(result)
     #pprint.pprint(request)
     #pprint.pprint(request.body)
