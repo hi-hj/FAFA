@@ -14,8 +14,12 @@ urlpatterns = [
     path('', include(router.urls)),
     path('health', views.health, name='health'),
     #path('ask.location', views.a1_location, name='ask.location'),
-    path('ask.location', views.a2_location, name='ask.location'),
-    path('a3_location', views.a3_location, name='a3_location'),
+    # path('ask.location', views.a2_location, name='ask.location'),
+    # path('a3_location', views.a3_location, name='a3_location'),
+    path('location', views.location, name="location"),
+    path('now_location', views.location, name="location"),
+    path('between_location', views.location, name="location"),
+    path('except_location', views.location, name="location"),
     #path('login/', views.login),
 
 ]
