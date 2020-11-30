@@ -22,6 +22,10 @@ from .models import Location
 from .serializers import LocationSerializer
 # Create your views here.
 
+
+def login(request):
+    return render(request, 'FAFA/login.html')
+
 def health(request):
     return JsonResponse({'STATUS': '200 OK'}, status=200)
 
@@ -121,3 +125,4 @@ def a1_location(request):
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+

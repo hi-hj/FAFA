@@ -14,6 +14,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path('health', views.health, name='health'),
     path('a1_location', views.a1_location, name='a1_location'),
+    path('login/', views.login),
+
 ]
 #router.register('answer.location', views.C1_LocationView, basename='C1_Location')
 
