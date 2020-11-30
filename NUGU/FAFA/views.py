@@ -60,14 +60,15 @@ class AlertViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Alert.objects.all()
     serializer_class = AlertSerializer
     # Alert.objects.create(user='test',alertType=1)
+
 def alert(request):
     result ={}
     nugu_body = json.loads(request.body, encoding='utf-8')
     #pprint.pprint(nugu_body)
-    FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME').get('value')
+    FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME_').get('value')
 
     # LOCATION 상황에 맞게 context 조정하는 함수 필요
-    context = {'FAMILY_NAME'     : FAMILY_NAME}
+    context = {'FAMILY_NAME_': FAMILY_NAME}
     
     result['version'] = nugu_body.get('version')
     result['resultCode'] = 'OK'
