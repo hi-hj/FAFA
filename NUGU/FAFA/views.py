@@ -36,7 +36,7 @@ def location(request):
     FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME').get('value')
     context = {'FAMILY_NAME'     : FAMILY_NAME,
                 'START_LOCATION' : '집',
-                'DESTI_LOCATION' : '회사'
+                'DESTI_LOCATION' : '회사',
                 'STATUS'         : '출근하는'}
     
     result['version'] = nugu_body.get('version')
