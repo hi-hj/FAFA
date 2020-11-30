@@ -30,7 +30,9 @@ def health(request):
     return JsonResponse({'STATUS': '200 OK'}, status=200)
 
 def location(request):
+    result ={}
     nugu_body = json.loads(request.body, encoding='utf-8')
+    pprint.pprint(nugu_body)
     FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME').get('value')
     context = {'FAMILY_NAME'     : FAMILY_NAME,
                 'START_LOCATION' : '집',
