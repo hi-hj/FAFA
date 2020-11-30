@@ -111,7 +111,7 @@ def test_location(request):
     
     context = {}
     context['LOCATION'] = LOCATION
-
+    Alert.objects.create(user='test',alertType=1)
     return JsonResponse(context)
 
 
