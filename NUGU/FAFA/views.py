@@ -34,6 +34,8 @@ def location(request):
     nugu_body = json.loads(request.body, encoding='utf-8')
     pprint.pprint(nugu_body)
     FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME').get('value')
+
+    # LOCATION 상황에 맞게 context 조정하는 함수 필요
     context = {'FAMILY_NAME'     : FAMILY_NAME,
                 'START_LOCATION' : '집',
                 'DESTI_LOCATION' : '회사',
@@ -44,38 +46,40 @@ def location(request):
     result['output'] = context
     return JsonResponse(result)
 
-def a2_location(request):
-    result = {}
-    nugu_body = json.loads(request.body, encoding='utf-8')
-    pprint.pprint(nugu_body)
-    result = nugu_body
-    result['resultCode'] = 'OK'
-    result['output'] = {'name':'회사'}
-    pprint.pprint(result)
-    return JsonResponse(result)
-
-def a3_location(request):
-    result ={}
-    nugu_body = json.loads(request.body, encoding='utf-8')
-    pprint.pprint(nugu_body)
-    FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME').get('value')
-    result['version'] = nugu_body.get('version')
-    result['resultCode'] = 'OK'
-    result['output'] = {'FAMILY_NAME':FAMILY_NAME,
-                        'name':'회사' }
-    return JsonResponse(result)
 
 
-def a1_location(request):
-    result = {}
-    counter = Location.objects.all().count()
-    context = Location.objects.get(pk=counter)
-    con_dict = model_to_dict(context)
-    context = json.dumps(con_dict, ensure_ascii=False, sort_keys=False, separators=(',', ':')).encode('utf-8')
-    result['version'] ='2.0'
-    result['resultCode'] = 'OK'
-    result['output'] = json.loads(context, encoding='utf-8')
-    return JsonResponse(result)    
+# def a2_location(request):
+#     result = {}
+#     nugu_body = json.loads(request.body, encoding='utf-8')
+#     pprint.pprint(nugu_body)
+#     result = nugu_body
+#     result['resultCode'] = 'OK'
+#     result['output'] = {'name':'회사'}
+#     pprint.pprint(result)
+#     return JsonResponse(result)
+
+# def a3_location(request):
+#     result ={}
+#     nugu_body = json.loads(request.body, encoding='utf-8')
+#     pprint.pprint(nugu_body)
+#     FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME').get('value')
+#     result['version'] = nugu_body.get('version')
+#     result['resultCode'] = 'OK'
+#     result['output'] = {'FAMILY_NAME':FAMILY_NAME,
+#                         'name':'회사' }
+#     return JsonResponse(result)
+
+
+# def a1_location(request):
+#     result = {}
+#     counter = Location.objects.all().count()
+#     context = Location.objects.get(pk=counter)
+#     con_dict = model_to_dict(context)
+#     context = json.dumps(con_dict, ensure_ascii=False, sort_keys=False, separators=(',', ':')).encode('utf-8')
+#     result['version'] ='2.0'
+#     result['resultCode'] = 'OK'
+#     result['output'] = json.loads(context, encoding='utf-8')
+#     return JsonResponse(result)    
     #result['STATUS'] ='200 OK'
     # context = Location.objects.filter(name='회사')[0]
     # dict_obj = model_to_dict(context)
