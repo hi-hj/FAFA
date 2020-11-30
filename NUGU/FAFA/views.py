@@ -23,8 +23,8 @@ from .serializers import LocationSerializer
 # Create your views here.
 
 
-def login(request):
-    return render(request, 'FAFA/login.html')
+# def login(request):
+#     return render(request, 'FAFA/login.html')
 
 def health(request):
     return JsonResponse({'STATUS': '200 OK'}, status=200)

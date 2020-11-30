@@ -36,13 +36,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'FAFA',
 
-    # allauth
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    # # allauth
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
 
-    # providers
-    'allauth.socialaccount.providers.google',
+    # # providers
+    # 'allauth.socialaccount.providers.google',
 ]
 # SOCIALACCOUNT_PROVIDERS = {
 #     'google': {
@@ -142,12 +142,12 @@ SITE_ID= 1
 
 #LOGIN_REDIRECT_URL = '/'
 
-AUTHENTICATION_BACKENDS = (
+# AUTHENTICATION_BACKENDS = (
 
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
+#     # Needed to login by username in Django admin, regardless of `allauth`
+#     'django.contrib.auth.backends.ModelBackend',
 
-    # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
+#     # `allauth` specific authentication methods, such as login by e-mail
+#     'allauth.account.auth_backends.AuthenticationBackend',
 
-)
+# )
