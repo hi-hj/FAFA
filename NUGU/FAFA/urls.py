@@ -13,7 +13,8 @@ router.register('location', views.LocationViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('health', views.health, name='health'),
-    path('ask.location', views.a1_location, name='ask.location'),
+    #path('ask.location', views.a1_location, name='ask.location'),
+    path('ask.location', views.a2_location, name='ask.location'),
     #path('login/', views.login),
 
 ]

@@ -29,8 +29,27 @@ from .serializers import LocationSerializer
 def health(request):
     return JsonResponse({'STATUS': '200 OK'}, status=200)
 
+def a2_location(request):
+    result = {}
+    nugu_body = json.loads(request.body, encoding='utf-8')
+    result = nugu_body
+    result['resultCode'] = 'OK'
+    result['output'] = {'name':'회사'}
+    pprint.pprint(result)
+    return JsonResponse(result)
+
+
 def a1_location(request):
-    # result ={}
+    result = {}
+    counter = Location.objects.all().count()
+    context = Location.objects.get(pk=counter)
+    con_dict = model_to_dict(context)
+    context = json.dumps(con_dict, ensure_ascii=False, sort_keys=False, separators=(',', ':')).encode('utf-8')
+    result['version'] ='2.0'
+    result['resultCode'] = 'OK'
+    result['output'] = json.loads(context, encoding='utf-8')
+    return JsonResponse(result)    
+    #result['STATUS'] ='200 OK'
     # context = Location.objects.filter(name='회사')[0]
     # dict_obj = model_to_dict(context)
     # serialized = json.dumps(dict_obj, ensure_ascii = False)
@@ -44,17 +63,9 @@ def a1_location(request):
     #c1 = Location.objects.get(pk=counter)
     #c1 = Location.objects.all().reverse()[:1].get()
 
-    result = {}
-    counter = Location.objects.all().count()
-    context = Location.objects.get(pk=counter)
+
     #context = Location.objects.filter(name='회사')[0]
-    con_dict = model_to_dict(context)
-    context = json.dumps(con_dict, ensure_ascii=False, sort_keys=False, separators=(',', ':')).encode('utf-8')
-    result['version'] ='2.0'
-    result['resultCode'] = 'OK'
-    result['output'] = json.loads(context, encoding='utf-8')
-    #result['STATUS'] ='200 OK'
-    return JsonResponse(result)
+
     #pprint.pprint(request)
     #pprint.pprint(request.body)
     #nugu_body = json.loads(request.body, encoding='utf-8')
