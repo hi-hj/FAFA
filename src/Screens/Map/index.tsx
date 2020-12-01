@@ -55,8 +55,10 @@ const Map = ({ navigation }:Props) => {
   
   const [currentLocation, setcurrentLocation] = useState<ILocation | undefined>(undefined);
   const [HCLocation, setHCLocation] = useState<HCLocation>(fakedata1);
+  const [onRoad, setOnRoad] = useState<boolean>(false);
 
   let _watchId:number;
+  
 
   const _logout = () => {
       /* AsyncStorage.removeItem('key');
@@ -132,16 +134,15 @@ const Map = ({ navigation }:Props) => {
      }
       initHC();
       _watchId = Geolocation.watchPosition(
-      position => {
-        const {latitude, longitude} = position.coords;
-        const data = {
-          "geoX" : latitude,
-          "geoY" : longitude
-        };
-        console.log(data);
-       /* fetchCurrentData(data); */
-        setcurrentLocation({latitude, longitude});  
-      },
+      (position) => {
+          const { latitude, longitude } = position.coords;
+          const data = {
+            "geoX": latitude,
+            "geoY": longitude,
+          };
+          /* fetchCurrentData(data); */
+          setcurrentLocation({ latitude, longitude });
+        },
       error => {
         console.log(error);
       },
@@ -156,6 +157,15 @@ const Map = ({ navigation }:Props) => {
       logout: _logout,
     });   
   }, []);
+
+  useEffect(() => {
+    const data = {
+      latitude : currentLocation?.latitude,
+      longitude : currentLocation?.longitude,
+      onRoad : onRoad
+    }
+    console.log(data);
+  }, [currentLocation]);
 
   useEffect(() => {
     return () => {
@@ -276,6 +286,14 @@ const Map = ({ navigation }:Props) => {
       );
     }}
     />}
+
+  <SearchButton 
+    label= {onRoad ? "도착" : "출발"}
+    style={{marginLeft: 5}}
+    onPress={() => {
+      setOnRoad(!onRoad);
+    }}
+    />
     </SearchStyle>
   </Container>
   );
