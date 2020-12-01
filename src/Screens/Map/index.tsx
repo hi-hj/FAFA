@@ -59,9 +59,9 @@ const Map = ({ navigation }:Props) => {
   let _watchId:number;
 
   const _logout = () => {
-      AsyncStorage.removeItem('key');
-      AsyncStorage.clear();
-      navigation.navigate('LoginNavigator');
+      /* AsyncStorage.removeItem('key');
+      AsyncStorage.clear(); */
+      navigation.navigate('Landing');
   }
 
   const updateKey = async (data: any) => {
@@ -78,7 +78,39 @@ const Map = ({ navigation }:Props) => {
     }
   }
 
+  const fetchCurrentData = (data: any) => {
+    fetch('http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/add_location/', {
+      method: 'POST', // or 'PUT'
+      headers: {
+          'Content-Type': 'application/json',
+        },
+      body: JSON.stringify(data),   
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
 
+  const fetchHCData = (data: any) => {
+    fetch('http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/set_location/', {
+      method: 'POST', // or 'PUT'
+      headers: {
+          'Content-Type': 'application/json',
+        },
+      body: JSON.stringify(data),   
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
 
 
 
@@ -87,10 +119,27 @@ const Map = ({ navigation }:Props) => {
   
 
   useEffect(() => {
+    async function initHC() {
+      try {
+        console.log("HC");
+        const list = await AsyncStorage.getItem('HC');
+        if (list !== null) {
+          setHCLocation(JSON.parse(list));
+        }
+      } catch (err) {
+        console.log(err)
+      }
+     }
+      initHC();
       _watchId = Geolocation.watchPosition(
       position => {
         const {latitude, longitude} = position.coords;
-        console.log({latitude, longitude});
+        const data = {
+          "geoX" : latitude,
+          "geoY" : longitude
+        };
+        console.log(data);
+       /* fetchCurrentData(data); */
         setcurrentLocation({latitude, longitude});  
       },
       error => {
@@ -115,21 +164,6 @@ const Map = ({ navigation }:Props) => {
       }
     };
   }, []);
-
-  /*useEffect(() => {
-    async function initHC() {
-      try {
-        console.log("HC");
-        const list = await AsyncStorage.getItem('HC');
-        if (list !== null) {
-          setHCLocation(JSON.parse(list));
-        }
-      } catch (err) {
-        console.log(err)
-      }
-     }
-     initHC();
-  }, [])*/
 
 
   return (
@@ -191,6 +225,14 @@ const Map = ({ navigation }:Props) => {
             homeX: latitude,
             homeY: longitude,
           }
+          const bData = {
+            user : "father",
+            companyX: HCLocation.companyX,
+            companyY: HCLocation.companyY,
+            homeX: latitude,
+            homeY: longitude,
+          };
+         /* fetchHCData(bData);*/
           setHCLocation(data);
           updateKey(JSON.stringify(data));
           console.log(data);
@@ -215,6 +257,14 @@ const Map = ({ navigation }:Props) => {
             homeX: HCLocation.homeX,
             homeY: HCLocation.homeY,
           }
+          const bData = {
+            user : "father",
+            companyX: latitude,
+            companyY: longitude,
+            homeX: HCLocation.homeX,
+            homeY: HCLocation.homeY
+          };
+         /* fetchHCData(bData); */
           setHCLocation(data);
           updateKey(JSON.stringify(data));
           console.log(data);
@@ -266,8 +316,7 @@ Map.navigationOptions = ({ navigation }: INaviProps ) => {
 export default Map;
 
 
-
-/* console.log('fetch start!');
+/*
 fetch('http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/location/', {
 method: 'POST', // or 'PUT'
 headers: {

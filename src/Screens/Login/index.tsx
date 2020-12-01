@@ -61,7 +61,7 @@ const Login = ({navigation}: Props) => {
           label="로그인"
           onPress={() => {
             AsyncStorage.setItem('key', 'JWT_KEY');
-            navigation.navigate('MapNavigator');
+            navigation.navigate('Landing');
           }}
         />
         <PasswordReset
