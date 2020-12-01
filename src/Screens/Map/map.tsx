@@ -46,21 +46,20 @@ interface HCLocation {
 }
 
 const Map = ({ navigation }:Props) => {
-  const fakedata1 = {
+  const fakedata = {
  companyX: 0,
  companyY: 0,
  homeX: 0,
  homeY: 0
   }
-  
   const [currentLocation, setcurrentLocation] = useState<ILocation | undefined>(undefined);
-  const [HCLocation, setHCLocation] = useState<HCLocation>(fakedata1);
+  const [HCLocation, setHCLocation] = useState<HCLocation>(fakedata);
 
-  let _watchId:number;
+  let _watchid:number;
 
   const _logout = () => {
-      AsyncStorage.removeItem('key');
-      AsyncStorage.clear();
+    /*  AsyncStorage.removeItem('key');
+      AsyncStorage.clear(); */
       navigation.navigate('LoginNavigator');
   }
 
@@ -79,7 +78,22 @@ const Map = ({ navigation }:Props) => {
   }
 
 
-
+Geolocation.watchPosition(
+  position => {
+    console.log("what");
+    const {latitude, longitude} = position.coords;
+    setcurrentLocation({latitude, longitude});   
+  },
+  error => {
+    console.log(error);
+  },
+  {
+    enableHighAccuracy: true,
+    distanceFilter: 100,
+    interval: 30000,
+    fastestInterval: 2000,
+  },
+);
 
 
 
@@ -87,36 +101,26 @@ const Map = ({ navigation }:Props) => {
   
 
   useEffect(() => {
-      _watchId = Geolocation.watchPosition(
+    Geolocation.getCurrentPosition(
       position => {
         const {latitude, longitude} = position.coords;
-        console.log({latitude, longitude});
-        setcurrentLocation({latitude, longitude});  
+        setcurrentLocation({
+          latitude,
+          longitude,
+        });
+        console.log(currentLocation);
       },
       error => {
-        console.log(error);
+        console.log(error.code, error.message);
       },
-      {
-        enableHighAccuracy: true,
-        distanceFilter: 100,
-        interval: 30000,
-        fastestInterval: 2000,
-      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
     navigation.setParams({
       logout: _logout,
-    });   
+    });    
   }, []);
 
   useEffect(() => {
-    return () => {
-      if (_watchId !== null) {
-        Geolocation.clearWatch(_watchId);
-      }
-    };
-  }, []);
-
-  /*useEffect(() => {
     async function initHC() {
       try {
         console.log("HC");
@@ -129,7 +133,7 @@ const Map = ({ navigation }:Props) => {
       }
      }
      initHC();
-  }, [])*/
+  }, [])
 
 
   return (

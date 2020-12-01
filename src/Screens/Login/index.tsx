@@ -60,7 +60,6 @@ const Login = ({navigation}: Props) => {
           style={{marginTop: 24}}
           label="로그인"
           onPress={() => {
-            console.log('test');
             AsyncStorage.setItem('key', 'JWT_KEY');
             navigation.navigate('MapNavigator');
           }}
