@@ -5,25 +5,20 @@ import { ActivityIndicator } from 'react-native';
 import Styled from 'styled-components/native';
 
 import Button from '~/Components/Button';
+import AlertButton from '~/Components/AlertButton';
 
 const Container = Styled.View`
     flex: 1;
-    justify-content: center;
     align-items: center;
 `;
 
 const FormContainer = Styled.View`
   width: 100%;
-  padding: 40px;
-  margin-top : 50px;
+  padding-left: 10px;
+  border: 1px;
 `;
 
-const PasswordReset = Styled.Text`
-  width: 100%;
-  font-size: 12px;
-  color: #000000;
-  text-align: center;
-`;
+
 
 const StyleButton = Styled.TouchableOpacity`
   padding: 8px;
@@ -40,33 +35,73 @@ interface INaviProps {
     navigation: NavigationScreenProp<NavigationState>;
   }
 
+  interface AlarmD {
+    alertType : number;
+    timeStamp : string;
+    user : string;
+  }
+
   
 const Alarm =  ({ navigation }: Props) => {
-
+    const [alarmData, setalarmData] = useState<Array<AlarmD>|undefined>(undefined);
+  
     const _logout = () => {
-        /* AsyncStorage.removeItem('key');
-        AsyncStorage.clear(); */
         navigation.navigate('Landing');
     }
+
+    const _alert = (data:any) => {
+        if(data==0){
+            return "아이가 찾고 있어요";
+        }else{
+            return "아이가 집에 도착했어요";
+        }
+    };
+
+    const _time = (data:any) => {
+        const MonthDay = data.substring(5,10)
+        const time = data.substring(11,16)
+        return MonthDay+"  "+time;
+    }
+
+    
+
     useEffect(() => {
        
         navigation.setParams({
           logout: _logout,
         });   
+
+        fetch('http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/alert/')
+        .then(res => {
+            // response 처리
+            // 응답을 JSON 형태로 파싱
+            return res.json();
+         })
+        .then(data => {
+          const newData = data.slice(-10)
+          setalarmData(newData.reverse());
+        })
+        .catch(err => {
+            // error 처리
+             console.log('Fetch Error', err);
+        });
+        
       }, []);
 
     return (
         <Container>
-        <FormContainer>
-        <Button
-          style={{marginTop: 24}}
-          label="백"
-          onPress={() => {
-            AsyncStorage.setItem('key', 'JWT_KEY');
-            navigation.navigate('Landing');
-          }}
-        />
+        { alarmData && (
+            <FormContainer>
+            { alarmData.map((alarm:AlarmD, index:number) => (
+                
+            <AlertButton
+            key={`alarm-${index}`}
+            label1 = {_alert(alarm.alertType)}
+            label2 = {_time(alarm.timeStamp)}
+            />
+             ))}
         </FormContainer>
+        )}     
       </Container>
     );
 };
