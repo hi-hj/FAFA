@@ -19,15 +19,14 @@ from rest_framework import status
 from rest_framework import viewsets
 
 
-from .models import Location, SetLocation, Alert
-from .serializers import LocationSerializer, SetLocationSerializer, AlertSerializer
-# Create your views here.
+from .models import User, Location, SetLocation, Alert
+from .serializers import UserSerializer ,LocationSerializer, SetLocationSerializer, AlertSerializer
 
-
-
+# NUGU - helath check
 def health(request):
     return JsonResponse({'STATUS': '200 OK'}, status=200)
 
+# NUGU - ask.location
 def location(request):
     result ={}
     nugu_body = json.loads(request.body, encoding='utf-8')
@@ -44,9 +43,36 @@ def location(request):
     result['resultCode'] = 'OK'
     result['output'] = context
 
-    #부모에게 Alert : '아이가 찾고 있어요' 
-    Alert.objects.create(user='test',alertType=0)
+    
+    user_id = User.objects.filter(role=FAMILY_NAME).values()[0]['id']
+    # Alert(0) : '아이가 찾고 있어요' 
+    Alert.objects.create(user_id_id=user_id,alertType=0)
     return JsonResponse(result)
+
+# NUGU - inform.home
+def alert(request):
+    result ={}
+    nugu_body = json.loads(request.body, encoding='utf-8')
+    #pprint.pprint(nugu_body)
+    FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME_').get('value')
+    #엄마 -> User -> id 찾기
+    # LOCATION 상황에 맞게 context 조정하는 함수 필요
+    context = {'FAMILY_NAME_': FAMILY_NAME}
+    
+    result['version'] = nugu_body.get('version')
+    result['resultCode'] = 'OK'
+    result['output'] = context
+
+    user_id = User.objects.filter(role=FAMILY_NAME).values()[0]['id']
+    # Alert(0) : '아이가 찾고 있어요' 
+    Alert.objects.create(user_id_id=user_id,alertType=1)
+    return JsonResponse(result)
+
+
+# Front - User / Location / Alert
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
@@ -61,26 +87,30 @@ class AlertViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = AlertSerializer
     # Alert.objects.create(user='test',alertType=1)
 
-def alert(request):
+
+#   Front - login
+def login(request):
+    req_body = json.loads(request.body, encoding='utf-8')
+    username = req_body.get('username')
+    user = User.objects.filter(username=username)
     result ={}
-    nugu_body = json.loads(request.body, encoding='utf-8')
-    #pprint.pprint(nugu_body)
-    FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME_').get('value')
-
-    # LOCATION 상황에 맞게 context 조정하는 함수 필요
-    context = {'FAMILY_NAME_': FAMILY_NAME}
-    
-    result['version'] = nugu_body.get('version')
-    result['resultCode'] = 'OK'
-    result['output'] = context
-
-    #부모에게 Alert : '아이가 집에 왔어요' 
-    Alert.objects.create(user='test',alertType=1)
+    if user.exists():
+        user_id = user.values()[0]['id']
+        set_location = SetLocation.objects.filter(user_id=user_id)
+        result = {'id' : user_id,
+                'role' : user.values()[0]['role'],
+                'homeX' : set_location.values()[0]['homeX'],
+                'homeY' : set_location.values()[0]['homeY'],
+                'companyX' : set_location.values()[0]['companyX'],
+                'companyY' : set_location.values()[0]['companyY']
+                }
+    # if not exists, return {}
     return JsonResponse(result)
 
+
 def test_location(request):
-    now_location = Location.objects.last()
-    set_location = SetLocation.objects.filter(user='test')
+    now_location = Location.objects.filter(user_id=1).last()
+    set_location = SetLocation.objects.filter(user_id=1)
     
     now_X = now_location.geoX
     now_Y = now_location.geoY
@@ -111,7 +141,9 @@ def test_location(request):
     
     context = {}
     context['LOCATION'] = LOCATION
-    Alert.objects.create(user='test',alertType=1)
+    # FAMILY_NAME = '엄마'
+    # user_id = User.objects.filter(role=FAMILY_NAME).values()[0]['id']
+    # Alert.objects.create(user_id_id=user_id, alertType=0)
     return JsonResponse(context)
 
 

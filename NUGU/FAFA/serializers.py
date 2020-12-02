@@ -1,17 +1,23 @@
-from .models import Location, SetLocation, Alert
+from .models import User, Location, SetLocation, Alert
 from rest_framework import serializers
 
-class LocationSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Location
-        fields = ('geoX','geoY', 'timeStamp')
+        model = User
+        fields = '__all__'
 
 class SetLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = SetLocation
-        fields = '__all__' 
+        fields = ('user_id','homeX', 'homeY','companyX','companyY')
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = ('user_id', 'geoX','geoY', 'timeStamp')
+
 
 class AlertSerializer(serializers.ModelSerializer):
     class Meta:
         model = Alert
-        fields = ('user', 'alertType','timeStamp')
+        fields = ('alertType','timeStamp')

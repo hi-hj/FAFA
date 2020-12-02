@@ -10,6 +10,8 @@ router = DefaultRouter()
 router.register('add_location', views.LocationViewSet)
 router.register('set_location', views.SetLocationViewSet)
 router.register('alert', views.AlertViewSet) # Front-End
+router.register('user', views.UserViewSet)
+
 #router.register('answer.location', views.a1_location, basename='a1_location')
 
 urlpatterns = [
@@ -22,6 +24,12 @@ urlpatterns = [
 
     path('alert_NUGU', views.alert, name="alert"), # NUGU-PLAY
     path('test', views.test_location, name="test"),
+    path('login', views.login, name="login"),
+    #path('posts/', views.posts, name='posts'),
+
+
+
+
     #path('login/', views.login),
     #path('ask.location', views.a1_location, name='ask.location'),
     # path('ask.location', views.a2_location, name='ask.location'),
