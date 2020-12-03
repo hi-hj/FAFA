@@ -21,6 +21,8 @@ media
 # in your Git repository. Update and uncomment the following line accordingly.
 # <django-project-name>/staticfiles/
 
+requirements.txt
+
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
 *.py[cod]
@@ -167,6 +169,7 @@ dmypy.json
 [Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
+
 
 ### VisualStudioCode ###
 .vscode/*
