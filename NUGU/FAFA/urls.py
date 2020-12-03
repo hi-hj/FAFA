@@ -26,7 +26,8 @@ urlpatterns = [
     path('test', views.test_location, name="test"),
     path('login', views.login, name="login"),
     #path('posts/', views.posts, name='posts'),
-
+    #path('train', Train.as_view(), name='train'),
+    path('predict', views.predict, name='predict'),
 
 
 
