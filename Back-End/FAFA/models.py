@@ -15,7 +15,7 @@ class User(models.Model):
 
 
 class SetLocation(models.Model):
-    user_id = models.ForeignKey('User', unique=True, on_delete=models.CASCADE)
+    user_id = models.OneToOneField('User', on_delete=models.CASCADE)
     homeX = models.FloatField()
     homeY = models.FloatField()
     companyX = models.FloatField()
@@ -27,6 +27,9 @@ class Location(models.Model):
     geoX = models.FloatField()
     geoY = models.FloatField()
     timeStamp = models.DateTimeField(auto_now_add=True)
+    onHomeRoad = models.IntegerField()
+    onCompanyRoad = models.IntegerField()
+
 
 class Alert(models.Model):
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)

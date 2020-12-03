@@ -31,25 +31,75 @@ def health(request):
 # NUGU - ask.location
 def location(request):
     result ={}
-    nugu_body = json.loads(request.body, encoding='utf-8')
-    pprint.pprint(nugu_body)
-    FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME').get('value')
-
-    # LOCATION 상황에 맞게 context 조정하는 함수 필요
-    context = {'FAMILY_NAME'     : FAMILY_NAME,
-                'START_LOCATION' : '집',
-                'DESTI_LOCATION' : '회사',
-                'STATUS'         : '출근하는'}
     
+    nugu_body = json.loads(request.body, encoding='utf-8')
+    FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME').get('value')
+    user_id = User.objects.filter(role=FAMILY_NAME).values()[0]['id']
+    
+    now_location = Location.objects.filter(user_id=user_id).last()
+    set_location = SetLocation.objects.filter(user_id=user_id)
+    
+    now_X = now_location.geoX
+    now_Y = now_location.geoY
+    now_time = int(now_location.timeStamp.hour * 60) + int(now_location.timeStamp.minute)
+    home_X = set_location.values()[0]['homeX']
+    home_Y = set_location.values()[0]['homeY']
+    company_X = set_location.values()[0]['companyX']
+    company_Y = set_location.values()[0]['companyY']
+    
+    # To use numpy's 'arrange' func
+    big_X = max(home_X, company_X)
+    small_X = min(home_X, company_Y)
+    big_Y =max(home_Y, company_Y)
+    small_Y = min(home_Y, company_Y)
+    LOCATION =''
+
+    # To use randomForest
+    train = pandas.read_csv('static/train.csv')
+    X = train[['geoX', 'geoY', 'time']]
+    Y = train[['onHomeRoad', 'onCompanyRoad']]
+    forest = RandomForestClassifier(n_estimators=100)
+    forest.fit(X,Y)
+    test = numpy.array((now_X, now_Y, now_time)).reshape(1,3)
+    ML_result = forest.predict(test)
+
+    # near home & company
+    if abs(now_X - home_X)<0.001 and abs(now_Y - home_Y)<0.0015:
+            context = { 'FAMILY_NAME'     : FAMILY_NAME,
+                        'LOCATION' : '집'}
+    elif abs(now_X - company_X)<0.001 and abs(now_Y - company_Y)<0.0015:
+            context = { 'FAMILY_NAME'     : FAMILY_NAME,
+                        'LOCATION' : '회사'}
+    # onHomeRoad : 1
+    elif ML_result[0][0] == 1 and ML_result[0][1] == 0:
+            context = { 'FAMILY_NAME'     : FAMILY_NAME,
+                        'START_LOCATION' : '회사',
+                        'DESTI_LOCATION' : '집',
+                        'STATUS'         : '퇴근하는'}
+    # onCompanyRoad : 1
+    elif ML_result[0][0] == 0 and ML_result[0][0] == 1:
+            context = { 'FAMILY_NAME'     : FAMILY_NAME,
+                        'START_LOCATION' : '집',
+                        'DESTI_LOCATION' : '회사',
+                        'STATUS'         : '출근하는'}
+    # not in boundary of home & company. 
+    elif now_X not in numpy.arange(small_X, big_X) and now_Y not in numpy.arange(small_Y, big_Y):
+            context = { 'FAMILY_NAME'     : FAMILY_NAME}
+    else:
+            context = { 'FAMILY_NAME'     : FAMILY_NAME}
+
     result['version'] = nugu_body.get('version')
     result['resultCode'] = 'OK'
     result['output'] = context
 
-    
-    user_id = User.objects.filter(role=FAMILY_NAME).values()[0]['id']
-    # Alert(0) : '아이가 찾고 있어요' 
+ 
+    # make Alert log for parent
     Alert.objects.create(user_id_id=user_id,alertType=0)
     return JsonResponse(result)
+    
+    
+
+    
 
 # NUGU - inform.home
 def alert(request):
@@ -111,11 +161,14 @@ def login(request):
 
 
 def test_location(request):
+    # FAMILY_NAME = '엄마'
+
     now_location = Location.objects.filter(user_id=1).last()
     set_location = SetLocation.objects.filter(user_id=1)
     
     now_X = now_location.geoX
     now_Y = now_location.geoY
+    now_time = int(now_location.timeStamp.hour * 60) + int(now_location.timeStamp.minute)
     home_X = set_location.values()[0]['homeX']
     home_Y = set_location.values()[0]['homeY']
     company_X = set_location.values()[0]['companyX']
@@ -126,17 +179,34 @@ def test_location(request):
     big_Y =max(home_Y, company_Y)
     small_Y = min(home_Y, company_Y)
     LOCATION =''
+
+    # To use randomForest
+    train = pandas.read_csv('static/train.csv')
+    X = train[['geoX', 'geoY', 'time']]
+    Y = train[['onHomeRoad', 'onCompanyRoad']]
+    forest = RandomForestClassifier(n_estimators=100)
+    forest.fit(X,Y)
+
+    test = numpy.array((now_X, now_Y, now_time)).reshape(1,3)
+    ML_result = forest.predict(test)
+    print(ML_result[0][0])
+
     # near home & company
     if abs(now_X - home_X)<0.001 and abs(now_Y - home_Y)<0.0015:
         LOCATION = '집'
     elif abs(now_X - company_X)<0.001 and abs(now_Y - company_Y)<0.0015:
         LOCATION = '회사'
+    # onHomeRoad : 1
+    elif ML_result[0][0] == 1 and ML_result[0][1] == 0:
+        LOCATION = '집 오는 중'
+    # onCompanyRoad : 1
+    elif ML_result[0][0] == 0 and ML_result[0][0] == 1:
+        LOCATION = '회사 가는 중'
     # not in boundary of home & company. 
     elif now_X not in numpy.arange(small_X, big_X) and now_Y not in numpy.arange(small_Y, big_Y):
         print('외출 중이에요')
-
-    # NEED BETWEEN-LOCATION ALGORITHM!
-    
+    else:
+        print('예외 상황')
     print(LOCATION)
     
     
@@ -151,26 +221,14 @@ def test_location(request):
 def predict(request):
     #####모델 만듦#####
     train = pandas.read_csv('static/train.csv')
-    #print(train)
     X = train[['geoX', 'geoY', 'time']]
     Y = train[['onHomeRoad', 'onCompanyRoad']]
     forest = RandomForestClassifier(n_estimators=100)
     forest.fit(X,Y)
+    ## 데이
+
     req = json.loads(request.body, encoding='utf-8')
     print(req)
-     # print(req.get('geoX'))
-    # print(req['body'])
-    # print(type(req))
-    # print(type(req['body']))
-    #POST 값 받아오기"
-    # req = json.loads(request.body, encoding='utf-8')
-    # print(req)
-    # print(type(req.get('body')))
-    # test = req.get('body')
-    # req = json.loads(test)
-    # print(test)
-    # print(req)
-
     user_data = numpy.array(
         (
         float(req.get('geoX')),
@@ -340,3 +398,71 @@ def predict(request):
 
 
 
+# NUGU - ask.location
+# def location(request):
+#     now_location = Location.objects.filter(user_id=1).last()
+#     set_location = SetLocation.objects.filter(user_id=1)
+    
+#     now_X = now_location.geoX
+#     now_Y = now_location.geoY
+#     now_time = int(now_location.timeStamp.hour * 60) + int(now_location.timeStamp.minute)
+#     home_X = set_location.values()[0]['homeX']
+#     home_Y = set_location.values()[0]['homeY']
+#     company_X = set_location.values()[0]['companyX']
+#     company_Y = set_location.values()[0]['companyY']
+#     # To use numpy's 'arrange' func
+#     big_X = max(home_X, company_X)
+#     small_X = min(home_X, company_Y)
+#     big_Y =max(home_Y, company_Y)
+#     small_Y = min(home_Y, company_Y)
+#     LOCATION =''
+
+#     # To use randomForest
+#     train = pandas.read_csv('static/train.csv')
+#     X = train[['geoX', 'geoY', 'time']]
+#     Y = train[['onHomeRoad', 'onCompanyRoad']]
+#     forest = RandomForestClassifier(n_estimators=100)
+#     forest.fit(X,Y)
+
+#     test = numpy.array((now_X, now_Y, now_time)).reshape(1,3)
+#     ML_result = forest.predict(test)
+#     print(ML_result[0][0])
+
+#     # near home & company
+#     if abs(now_X - home_X)<0.001 and abs(now_Y - home_Y)<0.0015:
+#         LOCATION = '집'
+#     elif abs(now_X - company_X)<0.001 and abs(now_Y - company_Y)<0.0015:
+#         LOCATION = '회사'
+#     # onHomeRoad : 1
+#     elif ML_result[0][0] == 1 and ML_result[0][1] == 0:
+#         LOCATION = '집 오는 중'
+#     # onCompanyRoad : 1
+#     elif ML_result[0][0] == 0 and ML_result[0][0] == 1:
+#         LOCATION = '회사 가는 중'
+#     # not in boundary of home & company. 
+#     elif now_X not in numpy.arange(small_X, big_X) and now_Y not in numpy.arange(small_Y, big_Y):
+#         print('외출 중이에요')
+#     else:
+#         print('예외 상황')
+#     print(LOCATION)
+    
+#     result ={}
+#     nugu_body = json.loads(request.body, encoding='utf-8')
+#     pprint.pprint(nugu_body)
+#     FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME').get('value')
+
+#     # LOCATION 상황에 맞게 context 조정하는 함수 필요
+#     context = {'FAMILY_NAME'     : FAMILY_NAME,
+#                 'START_LOCATION' : '집',
+#                 'DESTI_LOCATION' : '회사',
+#                 'STATUS'         : '출근하는'}
+    
+#     result['version'] = nugu_body.get('version')
+#     result['resultCode'] = 'OK'
+#     result['output'] = context
+
+    
+#     user_id = User.objects.filter(role=FAMILY_NAME).values()[0]['id']
+#     # Alert(0) : '아이가 찾고 있어요' 
+#     Alert.objects.create(user_id_id=user_id,alertType=0)
+#     return JsonResponse(result)
