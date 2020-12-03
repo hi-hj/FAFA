@@ -16,7 +16,6 @@ class LocationSerializer(serializers.ModelSerializer):
         model = Location
         fields = ('user_id', 'geoX','geoY', 'onHomeRoad', 'onCompanyRoad','timeStamp')
 
-
 class AlertSerializer(serializers.ModelSerializer):
     class Meta:
         model = Alert

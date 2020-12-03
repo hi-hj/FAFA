@@ -6,38 +6,24 @@ from . import views
 
 router = DefaultRouter()
 
-
+# FRONT-END & MAKING TEST DATA
 router.register('add_location', views.LocationViewSet)
 router.register('set_location', views.SetLocationViewSet)
-router.register('alert', views.AlertViewSet) # Front-End
-router.register('user', views.UserViewSet)
-
-#router.register('answer.location', views.a1_location, basename='a1_location')
+router.register('alert', views.AlertViewSet)
+router.register('user', views.UserViewSet) 
 
 urlpatterns = [
     path('', include(router.urls)),
     path('health', views.health, name='health'),
+    # NUGU : ask.location
     path('location', views.location, name="location"),
     path('now_location', views.location, name="location"),
     path('between_location', views.location, name="location"),
     path('except_location', views.location, name="location"),
-
-    path('alert_NUGU', views.alert, name="alert"), # NUGU-PLAY
-    path('test', views.test_location, name="test"),
+    # NUGU : inform.home
+    path('alert_NUGU', views.alert, name="alert"),
+    # FRONT-END : login
     path('login', views.login, name="login"),
-    #path('posts/', views.posts, name='posts'),
-    #path('train', Train.as_view(), name='train'),
-    path('predict', views.predict, name='predict'),
-
-
-
-    #path('login/', views.login),
-    #path('ask.location', views.a1_location, name='ask.location'),
-    # path('ask.location', views.a2_location, name='ask.location'),
-    # path('a3_location', views.a3_location, name='a3_location'),
+    # TEST IN LOCAL
+    path('test', views.test_location, name="test"),
 ]
-#router.register('answer.location', views.C1_LocationView, basename='C1_Location')
-
-
-# router.register('feed_scribe', views.SubscribeVideoViewSet)
-# router.register('upload_video', views.VideoViewSet)
