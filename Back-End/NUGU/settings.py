@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     # 아래부터 추가된 부분
     'rest_framework',
     'FAFA',
-    'estimators',
+   # 'estimators',
 
     # # allauth
     # 'allauth',
