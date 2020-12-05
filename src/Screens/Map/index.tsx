@@ -60,7 +60,8 @@ const Map = ({ navigation }:Props) => {
   const [currentLocation, setcurrentLocation] = useState<ILocation | undefined>(undefined);
   const [HCLocation, setHCLocation] = useState<HCLocation>(fakedata1);
   const [onRoad, setOnRoad] = useState<boolean>(false);
-
+  const [onCompany, setOnCompany] = useState<boolean>(false);
+  
   let _watchId:number;
   
 
@@ -82,9 +83,12 @@ const Map = ({ navigation }:Props) => {
     }
   }
 
-  const fetchCurrentData = (data: any) => {
-    fetch('http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/add_location/', {
-      method: 'POST', // or 'PUT'
+  const fetchCurrentData = (data: any, num: any) => {
+    const cnum = (num==1) ? 1 : 4;
+    const url = "http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/add_location/"+cnum+"/";
+
+    fetch(url, {
+      method: 'PUT', // or 'PUT'
       headers: {
           'Content-Type': 'application/json',
         },
@@ -141,11 +145,6 @@ const Map = ({ navigation }:Props) => {
       _watchId = Geolocation.watchPosition(
       (position) => {
           const { latitude, longitude } = position.coords;
-          const data = {
-            "geoX": latitude,
-            "geoY": longitude,
-          };
-          /* fetchCurrentData(data); */
           setcurrentLocation({ latitude, longitude });
         },
       error => {
@@ -165,11 +164,13 @@ const Map = ({ navigation }:Props) => {
 
   useEffect(() => {
     const data = {
-      latitude : currentLocation?.latitude,
-      longitude : currentLocation?.longitude,
-      onRoad : onRoad
+      user_id : HCLocation.id,
+      geoX : currentLocation?.latitude,
+      geoY : currentLocation?.longitude,
+      onHomeRoad : onRoad ? 1 : 0,
+      onCompanyRoad : onCompany ? 1 : 0
     }
-    console.log(data);
+    fetchCurrentData(data, data.user_id);
   }, [currentLocation]);
 
   useEffect(() => {
@@ -301,10 +302,18 @@ const Map = ({ navigation }:Props) => {
     />}
 
   <SearchButton 
-    label= {onRoad ? "도착" : "출발"}
+    label= {onRoad ? "도착" : "집으로"}
     style={{marginLeft: 5}}
     onPress={() => {
       setOnRoad(!onRoad);
+    }}
+    />
+
+<SearchButton 
+    label= {onCompany ? "도착" : "회사로"}
+    style={{marginLeft: 5}}
+    onPress={() => {
+      setOnCompany(!onCompany);
     }}
     />
     </SearchStyle>
@@ -347,18 +356,3 @@ Map.navigationOptions = ({ navigation }: INaviProps ) => {
 export default Map;
 
 
-/*
-fetch('http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/location/', {
-method: 'POST', // or 'PUT'
-headers: {
-'Content-Type': 'application/json',
-},
-body: JSON.stringify({ name: "hi", geoX:"1", geoY:"2" }),
-})
-.then(response => response.json())
-.then(data => {
-console.log('Success:', data);
-})
-.catch((error) => {
-console.error('Error:', error);
-}); */

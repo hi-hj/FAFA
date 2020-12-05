@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import {Linking} from 'react-native';
@@ -7,6 +7,7 @@ import Styled from 'styled-components/native';
 
 import Input from '~/Components/Input';
 import Button from '~/Components/Button';
+import { Value } from 'react-native-reanimated';
 
 const Nugu = Styled.Image`
   width : 250px;
@@ -46,11 +47,15 @@ interface ILocation {
 
 
 const Login = ({navigation}: Props) => {
+const [username, setName] = useState("")
+
   return (
     <Container>
       <Nugu source = {require('~/Assets/Images/Nugu.png')} />
       <FormContainer>
-        <Input style={{marginBottom: 16}} placeholder="아이디" />
+        <Input style={{marginBottom: 16}} placeholder="아이디" 
+        onChangeText= { text => setName(text)}
+        />
         <Input
           style={{marginBottom: 16}}
           placeholder="비밀번호"
@@ -60,12 +65,15 @@ const Login = ({navigation}: Props) => {
           style={{marginTop: 24}}
           label="로그인"
           onPress={() => {
+            if(username!="father"&& username!="mother"){
+              return 0;
+            }
             fetch('http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/login', {
             method: 'POST', // or 'PUT'
             headers: {
           'Content-Type': 'application/json',
             },
-            body: JSON.stringify({username:"father"}),   
+            body: JSON.stringify({username}),   
            })
           .then(response => response.json())
           .then(data => {
