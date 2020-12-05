@@ -60,7 +60,21 @@ const Login = ({navigation}: Props) => {
           style={{marginTop: 24}}
           label="로그인"
           onPress={() => {
-            AsyncStorage.setItem('key', 'JWT_KEY');
+            fetch('http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/login', {
+            method: 'POST', // or 'PUT'
+            headers: {
+          'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({username:"father"}),   
+           })
+          .then(response => response.json())
+          .then(data => {
+            AsyncStorage.setItem('HC', JSON.stringify(data));
+            console.log('Success:', data);
+           })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
             navigation.navigate('Landing');
           }}
         />

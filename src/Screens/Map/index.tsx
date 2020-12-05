@@ -43,6 +43,8 @@ interface HCLocation {
  companyY: number;
  homeX: number;
  homeY: number;
+ id: number;
+ role: string;
 }
 
 const Map = ({ navigation }:Props) => {
@@ -50,7 +52,9 @@ const Map = ({ navigation }:Props) => {
  companyX: 0,
  companyY: 0,
  homeX: 0,
- homeY: 0
+ homeY: 0,
+ id:0,
+ role:"fake"
   }
   
   const [currentLocation, setcurrentLocation] = useState<ILocation | undefined>(undefined);
@@ -61,8 +65,6 @@ const Map = ({ navigation }:Props) => {
   
 
   const _logout = () => {
-      /* AsyncStorage.removeItem('key');
-      AsyncStorage.clear(); */
       navigation.navigate('Landing');
   }
 
@@ -97,9 +99,11 @@ const Map = ({ navigation }:Props) => {
       });
   };
 
-  const fetchHCData = (data: any) => {
-    fetch('http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/set_location/', {
-      method: 'POST', // or 'PUT'
+  const fetchHCData = (data: any, num: any) => {
+    const cnum = (num==1) ? 1 : 3;
+    const url = "http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/set_location/"+cnum+"/";
+    fetch(url, {
+      method: 'PUT', // or 'PUT'
       headers: {
           'Content-Type': 'application/json',
         },
@@ -126,6 +130,7 @@ const Map = ({ navigation }:Props) => {
         console.log("HC");
         const list = await AsyncStorage.getItem('HC');
         if (list !== null) {
+          console.log(list);
           setHCLocation(JSON.parse(list));
         }
       } catch (err) {
@@ -234,15 +239,21 @@ const Map = ({ navigation }:Props) => {
             companyY: HCLocation.companyY,
             homeX: latitude,
             homeY: longitude,
+            id: HCLocation.id,
+            role: HCLocation.role
           }
           const bData = {
-            user : "father",
+            user_id : HCLocation.id,
             companyX: HCLocation.companyX,
             companyY: HCLocation.companyY,
             homeX: latitude,
             homeY: longitude,
           };
-         /* fetchHCData(bData);*/
+          console.log(typeof(bData.user_id));
+          console.log(bData);
+          console.log("보냇다");
+          
+          fetchHCData(bData, bData.user_id);
           setHCLocation(data);
           updateKey(JSON.stringify(data));
           console.log(data);
@@ -266,15 +277,17 @@ const Map = ({ navigation }:Props) => {
             companyY: longitude,
             homeX: HCLocation.homeX,
             homeY: HCLocation.homeY,
+            id: HCLocation.id,
+            role: HCLocation.role
           }
           const bData = {
-            user : "father",
+            user_id : HCLocation.id,
             companyX: latitude,
             companyY: longitude,
             homeX: HCLocation.homeX,
             homeY: HCLocation.homeY
           };
-         /* fetchHCData(bData); */
+          fetchHCData(bData, bData.user_id);
           setHCLocation(data);
           updateKey(JSON.stringify(data));
           console.log(data);

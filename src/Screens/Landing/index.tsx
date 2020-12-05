@@ -39,8 +39,7 @@ interface Props {
 const Landing =  ({ navigation }: Props) => {
     
     const _logout = () => {
-        /* AsyncStorage.removeItem('key');
-        AsyncStorage.clear(); */
+        AsyncStorage.clear();
         navigation.navigate('LoginNavigator');
     }
     useEffect(() => {
@@ -57,7 +56,6 @@ const Landing =  ({ navigation }: Props) => {
           style={{marginTop: 24}}
           label="알람"
           onPress={() => {
-            AsyncStorage.setItem('key', 'JWT_KEY');
             navigation.navigate('Alarm');
           }}
         />
@@ -65,7 +63,6 @@ const Landing =  ({ navigation }: Props) => {
           style={{marginTop: 24}}
           label="지도"
           onPress={() => {
-            AsyncStorage.setItem('key', 'JWT_KEY');
             navigation.navigate('Map');
           }}
         />
