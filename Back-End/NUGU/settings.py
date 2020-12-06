@@ -18,7 +18,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '*',
     'NUGU-play-FAFA.eba-anxvafbr.ap-northeast-2.elasticbeanstalk.com',
-    #'NUGU-play-FAFA.eba-tsuiq7em.us-west-2.elasticbeanstalk.com',
+    'NUGU-play-FAFA.eba-tsuiq7em.us-west-2.elasticbeanstalk.com',
     '127.0.0.1',
     'localhost',]
 
