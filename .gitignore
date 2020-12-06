@@ -20,3 +20,6 @@ pythonenv*
 [Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
+
+
+markdownpad-github.css
