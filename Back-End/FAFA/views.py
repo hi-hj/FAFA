@@ -3,8 +3,7 @@ import requests
 import numpy 
 import pandas
 from django.http import JsonResponse
-from rest_framework import status
-from rest_framework import viewsets
+from rest_framework import status, viewsets
 from sklearn.ensemble import RandomForestClassifier
 from .models import User, Location, SetLocation, Alert
 from .serializers import UserSerializer ,LocationSerializer, SetLocationSerializer, AlertSerializer
@@ -20,10 +19,10 @@ def location(request):
     # GET 'FAMILY_NAME' from NUGU speaker
     nugu_body    = json.loads(request.body, encoding='utf-8')
     FAMILY_NAME  = nugu_body.get('action').get('parameters').get('FAMILY_NAME').get('value')
+   # GET data from database
     user_id      = User.objects.filter(role=FAMILY_NAME).values()[0]['id']
     now_location = Location.objects.filter(user_id=user_id).last()
     set_location = SetLocation.objects.filter(user_id=user_id)
-    # GET data from database
     now_X        = now_location.geoX
     now_Y        = now_location.geoY
     now_time     = int(now_location.timeStamp.hour * 60) + int(now_location.timeStamp.minute)
