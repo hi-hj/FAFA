@@ -73,8 +73,9 @@ SKT의 인공지능 스피커 **NUGU를 활용하여** 휴대폰이 없는 자�
     NUGU speaker로 자신을 찾은 아이의 요청 확인
 
     Backend server에 최근 위치 전송
+    
+<img src="/document/src/SequenceDiagram.png" width="100%">
 
-![document/src/SequenceDiagram.png](document/src/SequenceDiagram.png)
 
 ## UI
 ### VUI (Voice User Interface)
