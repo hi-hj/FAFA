@@ -2,20 +2,17 @@
 :baby::man: AI 스피커를 활용한 부모/자녀 양방향 LBS
 
 <img src="https://img.shields.io/badge/NUGU%20play-2.0-brightgreen?style=flat-square" />
-<br>
 <div>
 <img src="https://img.shields.io/badge/Python-3.6-blue?style=flat-square" />
 <img src="https://img.shields.io/badge/Django-2.1.1-blue?style=flat-square" />
 <img src="https://img.shields.io/badge/DRF-3.11.0-blue?style=flat-square" />
 <img src="https://img.shields.io/badge/SQlite-3.21.0-blue?style=flat-square" />
 </div>
-<br>
 <div>
 <img src="https://img.shields.io/badge/React-16.13.1-orange?style=flat-square" /> 
 <img src="https://img.shields.io/badge/ReactNative-0.63.3-orange?style=flat-square" /> 
 <img src="https://img.shields.io/badge/React navi-3.13.0-orange?style=flat-square" /> 
 </div>
-<br>
 <div>
 <img src="https://img.shields.io/badge/Amazon%20Linux-2.9.16-yellow?style=flat-square" />
 <img src="https://img.shields.io/badge/AWS-EB-yellow?style=flat-square" />
