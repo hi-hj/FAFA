@@ -16,7 +16,7 @@
 <img src="../document/src/DataModel.png" height="500">
 
 <details>
-<summary>User : 부모에 대한 테이블</summary>
+<summary>User : 부모 관련 데이터</summary>
 
 | 필드      | 타입  | 역할                          | 예시                   |
 |:---:       |:---:   |---                          |---                    |
@@ -27,7 +27,7 @@
 
 
 <details>
-<summary>SetLocation : 부모의 회사/집의 위치에 대한 테이블</summary>
+<summary>SetLocation : 부모의 회사/집의 위치</summary>
     
 | 필드      | 타입  | 역할                          | 예시                   |
 |:---:        |:---:  |---                          |---                    |
@@ -40,7 +40,7 @@
 </details>
 
 <details>
-<summary>Location : 부모의 최근 위치에 대한 테이블</summary>
+<summary>Location : 부모의 최근 위치/summary>
     
 | 필드      | 타입  | 역할                          | 예시                   |
 |:---:        |:---:   |---                          |---                    |
@@ -54,7 +54,7 @@
 </details>
 
 <details>
-<summary>Alert : NUGU speaker의 요청에 대한 테이블</summary>
+<summary>Alert : NUGU speaker의 요청 로그</summary>
     
 | 필드      | 타입  | 역할                          | 예시                   |
 |:---:        |:---:   |---                          |---                    |
@@ -64,7 +64,7 @@
 |`timeStamp`     |date|자녀의 NUGU 스피커 요청을 저장한 시각 |2020-12-02T...    |
 </details>
 
-
+- - -
 
 ### API : [urls.py](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/FAFA/urls.py)
 
@@ -89,8 +89,8 @@
 |`except_location` |POST   |집&회사 사이가 아닌 경우|
 |`alert_NUGU`      |POST   |NUGU speaker(자녀)의 요청 로그 생성|
 
-
 - - -
+
 ### NUGU play
 ##### General setting
 사용자가 '미취학 아동'임을 고려하여 발화 설정 조정
