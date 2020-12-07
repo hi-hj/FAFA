@@ -49,6 +49,7 @@ SKT의 인공지능 스피커 **NUGU를 활용하여** 휴대폰이 없는 자�
 
 <details>
 <summary>NUGU speaker</summary>
+ 
  > 자녀의 발화 분석 (Intent & Entity)
  
  > Backend server에 위치 정보 요청
