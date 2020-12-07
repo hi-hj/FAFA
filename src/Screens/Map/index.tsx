@@ -23,6 +23,7 @@ const StyleButton = Styled.TouchableOpacity`
 const SearchStyle = Styled.View`
   margin-top: 10px;
   flexDirection: row;
+  justify-content: center;
   `;
 
 const Icon = Styled.Image`
@@ -266,7 +267,25 @@ const Map = ({ navigation }:Props) => {
       );    
     } }
     />}
-    { HCLocation && <SearchButton 
+    
+
+  <SearchButton 
+    label= {onRoad ? "도착" : "집으로"}
+    style={{marginLeft: 5}}
+    onPress={() => {
+      setOnRoad(!onRoad);
+    }}
+    />
+
+<SearchButton 
+    label= {onCompany ? "도착" : "회사로"}
+    style={{marginLeft: 5}}
+    onPress={() => {
+      setOnCompany(!onCompany);
+    }}
+    />
+
+{ HCLocation && <SearchButton 
     label="Company"
     style={{marginLeft: 5}}
     onPress={() => {
@@ -300,22 +319,6 @@ const Map = ({ navigation }:Props) => {
       );
     }}
     />}
-
-  <SearchButton 
-    label= {onRoad ? "도착" : "집으로"}
-    style={{marginLeft: 5}}
-    onPress={() => {
-      setOnRoad(!onRoad);
-    }}
-    />
-
-<SearchButton 
-    label= {onCompany ? "도착" : "회사로"}
-    style={{marginLeft: 5}}
-    onPress={() => {
-      setOnCompany(!onCompany);
-    }}
-    />
     </SearchStyle>
   </Container>
   );

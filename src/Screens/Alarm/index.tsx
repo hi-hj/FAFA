@@ -10,12 +10,12 @@ import AlertButton from '~/Components/AlertButton';
 const Container = Styled.View`
     flex: 1;
     align-items: center;
+    background-color: #faf9f5;
 `;
 
 const FormContainer = Styled.View`
+  margin-top : 10px;
   width: 100%;
-  padding-left: 10px;
-  border: 1px;
 `;
 
 

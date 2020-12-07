@@ -2,15 +2,17 @@ import React from 'react';
 import Styled from 'styled-components/native';
 
 const StyleButton = Styled.TouchableOpacity`
-  width: 15%;
+  width: 23%;
   height: 40px;
   border-radius: 10px;
+  border : 1px;
   justify-content: center;
   align-items: center;
-  background-color: #009dff;
+  margin : 5px;
+  background-color: #FFFFFF;
 `;
 const Label = Styled.Text`
-  color: #FFFFFF;
+  color: #000000;
 `;
 
 interface Props {
