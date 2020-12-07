@@ -47,7 +47,8 @@ SKT의 인공지능 스피커 **NUGU를 활용하여** 휴대폰이 없는 자�
 ## Structure
 <img src="/document/src/SequenceDiagram.png" width="100%">
 
-NUGU speaker
+<details>
+<summary>NUGU speaker</summary>
 ```
 자녀의 발화 분석 (Intent & Entity)
 Backend server에 위치 정보 요청
@@ -55,20 +56,26 @@ Backend server에 로그 생성 요청
 부모 위치 정보 응답
 요청 정상 전달 응답
 ```
+</details>
 
-Backend proxy server
+<details>
+<summary>Backend proxy server</summary>
 ```
 부모의 최근 위치를 기반으로 상태 분석 (ML - randomForest 사용)
 Application에 NUGU speaker의 요청 로그 전달
 NUGU speaker에 부모의 상태와 위치 정보 전달
 ```
+</details>
 
-Application
+<details>
+<summary>Application</summary>
 ```
 회사와 집의 위도와 경도 설정
 NUGU speaker로 자신을 찾은 아이의 요청 확인
 Backend server에 최근 위치 전송
-```    
+```
+</details>
+
 
 
 
