@@ -15,42 +15,50 @@
 ### DataBase : [models.py](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/FAFA/models.py)
 <img src="../document/src/DataModel.png" height="500">
 
-##### User : 부모에 대한 테이블
-| 필드      | 타입  | 역할                          | 예시                   |
-|---        |---  |---                          |---                    |
-|`id`       |int    |(PK)사용자 고유 id 값         | 1, 2, 3...             |
-|`user_name`|char   |Application 로그인 시 필요한 ID| 'mother', 'father' |
-|`role`     |varchar|NUGU에서 전달 받은 Entity(FAMILY_NAME) | '엄마', '아빠'          |
+<details>
+    <summary>User : 부모에 대한 테이블</summary>
+    | 필드      | 타입  | 역할                          | 예시                   |
+    |---        |---  |---                          |---                    |
+    |`id`       |int    |(PK)사용자 고유 id 값         | 1, 2, 3...             |
+    |`user_name`|char   |Application 로그인 시 필요한 ID| 'mother', 'father' |
+    |`role`     |varchar|NUGU에서 전달 받은 Entity(FAMILY_NAME) | '엄마', '아빠'          |
+</details>
 
-##### SetLocation : 부모의 회사/집의 위치에 대한 테이블
-| 필드      | 타입  | 역할                          | 예시                   |
-|---        |---  |---                          |---                    |
-|`id`       |int    |(PK) 고유 id 값        | 1, 2, 3...             |
-|`user_id`  |int   |(FK) User 테이블의 id | 1, 2, 3 ... |
-|`homeX`     |float|사용자의 집 위도| 36.1234  |
-|`homeY`     |float|사용자의 집 경도 | 123.1234      |
-|`companyX`     |float|사용자의 회사 위도 | 35.1234    |
-|`companyY`   |float|사용자의 회사 경도 | 122.4567     |
 
-##### Location : 부모의 최근 위치에 대한 테이블
-| 필드      | 타입  | 역할                          | 예시                   |
-|---        |---  |---                          |---                    |
-|`id`       |int    |(PK) 고유 id 값        | 1, 2, 3...             |
-|`user_id`  |int   |(FK) User 테이블의 id | 1, 2, 3 ... |
-|`geoX`     |float|사용자의 현재 위도| 36.1234  |
-|`geoY`     |float|사용자의 현재 경도 | 123.1234      |
-|`timeStamp`     |date|사용자의 데이터를 저장한 시각 |2020-12-02T...    |
-|`onHomeRoad`     |int|퇴근길 표시 (ML 사용)| 0, 1    |
-|`onCompanyRoad`   |int|출근길 표시 (ML 사용)| 0, 1     |
+<details>
+    <summary>SetLocation : 부모의 회사/집의 위치에 대한 테이블</summary>
+    | 필드      | 타입  | 역할                          | 예시                   |
+    |---        |---  |---                          |---                    |
+    |`id`       |int    |(PK) 고유 id 값        | 1, 2, 3...             |
+    |`user_id`  |int   |(FK) User 테이블의 id | 1, 2, 3 ... |
+    |`homeX`     |float|사용자의 집 위도| 36.1234  |
+    |`homeY`     |float|사용자의 집 경도 | 123.1234      |
+    |`companyX`     |float|사용자의 회사 위도 | 35.1234    |
+    |`companyY`   |float|사용자의 회사 경도 | 122.4567     |
+</details>
 
-##### Alert : NUGU speaker의 요청에 대한 테이블
-| 필드      | 타입  | 역할                          | 예시                   |
-|---        |---  |---                          |---                    |
-|`id`       |int    |(PK) 고유 id 값        | 1, 2, 3...             |
-|`user_id`  |int   |(FK) User 테이블의 id | 1, 2, 3 ... |
-|`alertType`     |int|NUGU 스피커의 Intent 분류| 0, 1  |
-|`timeStamp`     |date|자녀의 NUGU 스피커 요청을 저장한 시각 |2020-12-02T...    |
+<details>
+    <summary>Location : 부모의 최근 위치에 대한 테이블</summary>
+    | 필드      | 타입  | 역할                          | 예시                   |
+    |---        |---  |---                          |---                    |
+    |`id`       |int    |(PK) 고유 id 값        | 1, 2, 3...             |
+    |`user_id`  |int   |(FK) User 테이블의 id | 1, 2, 3 ... |
+    |`geoX`     |float|사용자의 현재 위도| 36.1234  |
+    |`geoY`     |float|사용자의 현재 경도 | 123.1234      |
+    |`timeStamp`     |date|사용자의 데이터를 저장한 시각 |2020-12-02T...    |
+    |`onHomeRoad`     |int|퇴근길 표시 (ML 사용)| 0, 1    |
+    |`onCompanyRoad`   |int|출근길 표시 (ML 사용)| 0, 1     |
+</details>
 
+<details>
+    <summary>Alert : NUGU speaker의 요청에 대한 테이블</summary>
+    | 필드      | 타입  | 역할                          | 예시                   |
+    |---        |---  |---                          |---                    |
+    |`id`       |int    |(PK) 고유 id 값        | 1, 2, 3...             |
+    |`user_id`  |int   |(FK) User 테이블의 id | 1, 2, 3 ... |
+    |`alertType`     |int|NUGU 스피커의 Intent 분류| 0, 1  |
+    |`timeStamp`     |date|자녀의 NUGU 스피커 요청을 저장한 시각 |2020-12-02T...    |
+</details>
 
 
 
