@@ -91,18 +91,18 @@
 
 
 - - -
-
 ### NUGU play
 ##### General setting
 사용자가 '미취학 아동'임을 고려하여 발화 설정 조정
 - 발화속도 : 100% -> 90%
 - 문장 사이 묵음 구간 길이 : 600ms -> 800ms
-- Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08)
+
+Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08)
 
 ##### Play 구조
 ![../document/src/NUGUbuild.png](../document/src/NUGUbuild.png)
 
-집에 왔다고 알림
+A. inform.home
 
 1. 집에 왔다고 알림
 
@@ -140,87 +140,60 @@ Alert.objects.create(user_id_id=user_id,alertType=1)
 |`Prompt`  |FAMILY_NAME  |fixed|
 
 
+B. ask.location
 
+1. 부모의 현재 위치 요청
 
-
-ask.location
-예상 발화 : 엄마, 지금 어디야 
 | `발화예시`         | 엄마  | 지금 어디야|
 |---               |:---:  |---:|
 |`분류`  |부모  |현재 위치 요청|
 |`Entity`| FAMILY_NAME| STATEMENT_LOCATION|
 
-Back-end URL/location
-method : POST
-request
-{
-    "version": "2.0",
+2. Back-end server에 Request 전송
+- URL : proxy server/location
+- METHOD : POST
+~~~json
+ "version": "2.0",
     "action": {
-        "actionName": "alert_NUGU",
+        "actionName": "location",
         "parameters": {
             "FAMILY_NAME": 
             { "type": "FAMILY_NAME", "value": "엄마"},
         }
     }
-}
+~~~
+3. Back-end server에서 받은 Response
 
-
-Back-end -> views.location ->  now_location / between_locatio / except_location
-# now_location
-    if abs(now_X - home_X)<0.001 and abs(now_Y - home_Y)<0.0015:
-        context = { 'FAMILY_NAME' : FAMILY_NAME,
-                    'LOCATION'    : '집'
-                    }
-    elif abs(now_X - company_X)<0.001 and abs(now_Y - company_Y)<0.0015:
-        context = { 'FAMILY_NAME' : FAMILY_NAME,
-                    'LOCATION'     : '회사'
-                    }
-    # between_location
-    elif now_X in numpy.arange(small_X, big_X) and now_Y in numpy.arange(small_Y, big_Y):
-        # Machine Learning - randomForest method
-        train       = pandas.read_csv('static/train.csv')
-        X           = train[['geoX', 'geoY', 'time']]
-        Y           = train[['onHomeRoad', 'onCompanyRoad']]
-        forest      = RandomForestClassifier(n_estimators=100)
-        forest.fit(X,Y)
-        test        = numpy.array((now_X, now_Y, now_time)).reshape(1,3)
-        ML_result   = forest.predict(test)
-        # defined off work
-        if ML_result[0][0] == 1 and ML_result[0][1] == 0:
-            context = { 'FAMILY_NAME'    : FAMILY_NAME,
-                        'START_LOCATION' : '회사',
-                        'DESTI_LOCATION' : '집',
-                        'STATUS'         : '퇴근하는'
-                        }
-        # defined on work
-        elif ML_result[0][0] == 0 and ML_result[0][0] == 1:
-            context = { 'FAMILY_NAME'    : FAMILY_NAME,
-                        'START_LOCATION' : '집',
-                        'DESTI_LOCATION' : '회사',
-                        'STATUS'         : '출근하는'
-                        }
-    # except_location 
-    elif now_X not in numpy.arange(small_X, big_X) and now_Y not in numpy.arange(small_Y, big_Y):
-        context     = { 'FAMILY_NAME'    : FAMILY_NAME}
-    else:
-        context     = { 'FAMILY_NAME'    : FAMILY_NAME}
-
-    result ={}
-    result['version'] = nugu_body.get('version')
-    result['resultCode'] = 'OK'
-    result['output'] = context
-    # make Alert log for parent
-    Alert.objects.create(user_id_id=user_id,alertType=0)
-    return JsonResponse(result)
-
-
-save alert log to DB
-result
-    
-response to NUGU
-{
-    "version": "2.0",
-    "resultCode": "OK",
+    3.1 set_location : 부모의 최근 위치 정보가 회사 or 집
+    ~~~json
     "output": {
-      "FAMILY_NAME": "엄마",
-    },
+        "FAMILY_NAME": "엄마",
+        "LOCATION"    : '집'
+    }
+    ~~~
+    | `응답예시` | 엄마|는 |회사 |에 있어요|
+    |---        |--- |---| ---| ---|
+    |`Prompt`  |FAMILY_NAME  |fix|LOCATION | fix|
+
+    3.2 between_location : 부모의 최근 위치가 회사-집 사이
+    - 출근/퇴근은 ML의 randomForest 활용하여 분류
+    "output" :{ 'FAMILY_NAME'    : FAMILY_NAME,
+                            'START_LOCATION' : '회사',
+                            'DESTI_LOCATION' : '집',
+                            'STATUS'         : '퇴근하는'
+                            }
+
+    | `응답예시` | 엄마      |는 |회사 |에서 | 집|으로 |퇴근하는| 중이에요|
+    |---        |---        |---| ---| ---| ---| ---| ---|---|
+    |`Prompt`  |FAMILY_NAME |fix|START_LOCATION|fix|DESTI_LOCATION|fixed|STATUS|fix|
+
+
+    3.3 except_location : 부모의 최근 위치가 회사-집 사이가 아닌 경우
+    ~~~json
+        "output": {
+        "FAMILY_NAME": "엄마"
+        }
+    ~~~
+    | `응답예시`         | 엄마  | 는 외출 중이에요|
+    |---               |---  |---|
+    |`Prompt`  |`FAMILY_NAME`  |fix|
