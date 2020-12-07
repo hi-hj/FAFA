@@ -71,7 +71,7 @@ const Alarm =  ({ navigation }: Props) => {
           logout: _logout,
         });   
 
-        fetch('http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/alert/')
+        fetch('http://fafa-dev.ap-northeast-2.elasticbeanstalk.com/alert/')
         .then(res => {
             // response 처리
             // 응답을 JSON 형태로 파싱

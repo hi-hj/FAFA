@@ -85,7 +85,7 @@ const Map = ({ navigation }:Props) => {
 
   const fetchCurrentData = (data: any, num: any) => {
     const cnum = (num==1) ? 1 : 4;
-    const url = "http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/add_location/"+cnum+"/";
+    const url = "http://fafa-dev.ap-northeast-2.elasticbeanstalk.com/add_location/"+cnum+"/";
 
     fetch(url, {
       method: 'PUT', // or 'PUT'
@@ -105,7 +105,7 @@ const Map = ({ navigation }:Props) => {
 
   const fetchHCData = (data: any, num: any) => {
     const cnum = (num==1) ? 1 : 3;
-    const url = "http://nugu-play-fafa.eba-tsuiq7em.us-west-2.elasticbeanstalk.com/set_location/"+cnum+"/";
+    const url = "http://fafa-dev.ap-northeast-2.elasticbeanstalk.com/set_location/"+cnum+"/";
     fetch(url, {
       method: 'PUT', // or 'PUT'
       headers: {
