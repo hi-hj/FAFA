@@ -29,7 +29,7 @@
  <p style="font-size:9pt">
  이를 해결하고자 휴대폰이 아닌 인공지능 스피커를 활용해 부모와 아이의 양방향 소통을 제공한다. 아이는 NUGU(SKT의 인공지능 스피커)를 통해, 부모는 모바일 어플리케이션을 통해 서로와 소통할 것이다.</p>
 
-
+- - - 
 
 #### :grey_question::grey_exclamation: 서비스 소개
 ##### :chart_with_downwards_trend: 문제 파악
@@ -43,6 +43,7 @@
 
 <p style="font-size:9pt">자녀의 스마트폰 구매 부담없이 NUGU 스피커를 활용하면 되기에 부모 입장에서는 <span style="font-weight:bold">아이의 휴대폰 중독 및 휴대폰 비용에 대한 부담이 없다.</span> 또한 <span style="font-weight:bold">기존 LBS 서비스들은 </span> '부모 > 자녀'의 단방향 소통을 제공했지만 FAFA는 '자녀 <> 부모'의 양방향 소통을 제공하기에 <span style="font-weight:bold">차별점</span>을 가진다. </p>
 
+- - -
 
 ## Structure
 
