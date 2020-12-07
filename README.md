@@ -1,5 +1,5 @@
 # FAFA
-#### :baby::man: AI 스피커를 활용한 부모/자녀 양방향 LBS
+### :baby::man: AI 스피커를 활용한 부모/자녀 양방향 LBS
 <div>
 <img src="https://img.shields.io/badge/NUGU%20play-2.0-brightgreen?style=flat-square" />
 </div>
