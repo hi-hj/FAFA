@@ -14,17 +14,16 @@
 
 ### DataBase(SQlite)
 [models.py](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/FAFA/models.py)
-![../document/src/DataModel.png](../document/src/DataModel.png)
+<img src="../document/src/DataModel.png" height="500">
 
-User : 부모에 대한 테이블
+##### User : 부모에 대한 테이블
 | 필드      | 타입  | 역할                          | 예시                   |
 |---        |---  |---                          |---                    |
 |`id`       |int    |(PK)사용자 고유 id 값         | 1, 2, 3...             |
 |`user_name`|char   |Application 로그인 시 필요한 ID| 'mother', 'father' |
 |`role`     |varchar|NUGU에서 전달 받은 Entity(FAMILY_NAME) | '엄마', '아빠'          |
 
-
-SetLocation : 부모의 회사/집의 위치에 대한 테이블
+##### SetLocation : 부모의 회사/집의 위치에 대한 테이블
 | 필드      | 타입  | 역할                          | 예시                   |
 |---        |---  |---                          |---                    |
 |`id`       |int    |(PK) 고유 id 값        | 1, 2, 3...             |
@@ -34,7 +33,7 @@ SetLocation : 부모의 회사/집의 위치에 대한 테이블
 |`companyX`     |float|사용자의 회사 위도 | 35.1234    |
 |`companyY`   |float|사용자의 회사 경도 | 122.4567     |
 
-Location : 부모의 최근 위치에 대한 테이블
+##### Location : 부모의 최근 위치에 대한 테이블
 | 필드      | 타입  | 역할                          | 예시                   |
 |---        |---  |---                          |---                    |
 |`id`       |int    |(PK) 고유 id 값        | 1, 2, 3...             |
@@ -45,7 +44,7 @@ Location : 부모의 최근 위치에 대한 테이블
 |`onHomeRoad`     |int|퇴근길 표시 (ML 사용)| 0, 1    |
 |`onCompanyRoad`   |int|출근길 표시 (ML 사용)| 0, 1     |
 
-Alert : NUGU speaker의 요청에 대한 테이블
+##### Alert : NUGU speaker의 요청에 대한 테이블
 | 필드      | 타입  | 역할                          | 예시                   |
 |---        |---  |---                          |---                    |
 |`id`       |int    |(PK) 고유 id 값        | 1, 2, 3...             |
