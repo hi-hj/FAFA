@@ -44,7 +44,7 @@ SKT의 인공지능 스피커 **NUGU를 활용하여** 휴대폰이 없는 자�
 
 - - -
 
-## Structure
+#### :clipboard: 서비스 구조
 <img src="/document/src/SequenceDiagram.png" width="100%">
 
 <details>
@@ -83,15 +83,17 @@ SKT의 인공지능 스피커 **NUGU를 활용하여** 휴대폰이 없는 자�
 
 
 
+- - -
 
-## UI
-### VUI (Voice User Interface)
+
+#### :family: UI
+##### :baby: VUI (Voice User Interface)
 
 NUGU speaker를 사용하는 자녀
 
 ![document/src/SequenceDiagram.png/VUI.png](document/src/VUI.png)
 
-### GUI (Graphical User Interface)
+##### :man: GUI (Graphical User Interface)
 
 Application을 사용하는 부모
 
@@ -99,9 +101,9 @@ Application을 사용하는 부모
 
 ![document/src/GUI.png](document/src/GUI.png)
 
-## Contributors
-
 ---
+
+##### :fire: Contributors
 
 [박형진](https://github.com/HYUcoolguy)  - Back-end 개발 및 배포 (Django / DRF)
 
@@ -110,3 +112,4 @@ Application을 사용하는 부모
 [이정선](https://github.com/sseonnn) - NUGU 개발 및 배포 
 
 [윤승권](https://github.com/sgwon96) - Front-end 개발 (React Native)
+
