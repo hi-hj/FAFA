@@ -105,11 +105,11 @@ Application을 사용하는 부모
 
 #### :fire: Contributors
 
-[박형진](https://github.com/HYUcoolguy)  - Back-end 개발 및 배포 (Django / DRF)
+[박형진](https://github.com/HYUcoolguy)  : Back-end 개발 및 배포 (Django / DRF)
 
-[이준석](https://github.com/junslee0912) - ML 기법 활용 및 데이터셋 수집
+[이준석](https://github.com/junslee0912) : ML 기법 활용 및 데이터셋 수집
 
-[이정선](https://github.com/sseonnn) - NUGU 개발 및 배포 
+[이정선](https://github.com/sseonnn) : NUGU 개발 및 배포 
 
-[윤승권](https://github.com/sgwon96) - Front-end 개발 (React Native)
+[윤승권](https://github.com/sgwon96) : Front-end 개발 (React Native)
 
