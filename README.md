@@ -49,21 +49,11 @@ SKT의 인공지능 스피커 **NUGU를 활용하여** 휴대폰이 없는 자�
 
 <details>
 <summary>NUGU speaker</summary>
- <code style="white-space:nowrap;">
-  자녀의 발화 분석 (Intent & Entity)
-  
-  <br/>
-  Backend server에 위치 정보 요청
-  
-  <br/>
-  Backend server에 로그 생성 요청
-  
-  <br/>
-  부모 위치 정보 응답
-  
-  <br/>
-  요청 정상 전달 응답<br/>
- </code>
+ <code style="white-space:nowrap;">자녀의 발화 분석 (Intent & Entity)</br>
+ ackend server에 위치 정보 요청</br>
+ ackend server에 로그 생성 요청</br>
+ 부모 위치 정보 응답</br>
+ 요청 정상 전달 응답</br>
 </details>
 
 <details>
