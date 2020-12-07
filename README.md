@@ -23,14 +23,14 @@
 - - -
 
 
-#### :eyes: 개요 
+### :eyes: 개요 
  FAFA는 아이와 부모의 양방향 소통을 위한 인공지능 스피커 기반 서비스이다. 초등학교 고학년 이상의 휴대폰 보급율은 점점 증가하고 있지만, 가정내 유선전화 보급률과 미취학 아동의 휴대폰 보급률은 반대로 줄어드는 추세이다. 즉, 미취학 아동의 통신 수단 고립이 심화되었다.
  
  이를 해결하고자 휴대폰이 아닌 인공지능 스피커를 활용해 부모와 아이의 양방향 소통을 제공한다. 아이는 NUGU(SKT의 인공지능 스피커)를 통해, 부모는 모바일 어플리케이션을 통해 서로와 소통할 것이다.
 
 - - - 
 
-#### :grey_question::grey_exclamation: 서비스 소개
+### :grey_question::grey_exclamation: 서비스 소개
 ##### :chart_with_downwards_trend: 문제 파악
 2018년 기준 초등학교 고학년의 휴대폰 보급율은 90% 이상이지만, 저학년의 보급율은 58.8%이고 유치원생까지 포함한다면 그 격차는 더 클 것으로 예상한다. 또한 유선 전화 보급율은 매년 줄어드는 추세이며 2019년에는 최저치인 51.9%를 기록했다.이를 통해 휴대폰 없이 **집에 혼자 남은 아이가 부모에게 연락할 수단이 없는 상황**이 증가하는 추세임을 파악했다.
 
@@ -44,7 +44,7 @@ SKT의 인공지능 스피커 **NUGU를 활용하여** 휴대폰이 없는 자�
 
 - - -
 
-#### :clipboard: 서비스 구조
+### :clipboard: 서비스 구조
 <img src="/document/src/SequenceDiagram.png" width="100%">
 
 <details>
@@ -86,14 +86,14 @@ SKT의 인공지능 스피커 **NUGU를 활용하여** 휴대폰이 없는 자�
 - - -
 
 
-#### :family: UI
-##### :baby: VUI (Voice User Interface)
+### :family: UI
+#### :baby: VUI (Voice User Interface)
 
 NUGU speaker를 사용하는 자녀
 
 ![document/src/SequenceDiagram.png/VUI.png](document/src/VUI.png)
 
-##### :man: GUI (Graphical User Interface)
+#### :man: GUI (Graphical User Interface)
 
 Application을 사용하는 부모
 
@@ -103,7 +103,7 @@ Application을 사용하는 부모
 
 ---
 
-##### :fire: Contributors
+#### :fire: Contributors
 
 [박형진](https://github.com/HYUcoolguy)  - Back-end 개발 및 배포 (Django / DRF)
 
