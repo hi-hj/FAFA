@@ -12,8 +12,7 @@
 
 - - -
 
-### DataBase(SQlite)
-[models.py](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/FAFA/models.py)
+### DataBase : [models.py](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/FAFA/models.py)
 <img src="../document/src/DataModel.png" height="500">
 
 ##### User : 부모에 대한 테이블
@@ -57,9 +56,7 @@
 
 ### API : [urls.py](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/FAFA/urls.py)
 
-
-1. Application
-
+##### Application
 
 | Address               | Method  | 설명|
 |---                    |:---:    |---                          |
@@ -69,7 +66,7 @@
 |`add_location`         |POST     |사용자의 현재 위치,시각,상태 저장|
 |`alert`                |GET      |NUGU speaker(자녀)의 요청 로그 확인|
 
-2. NUGU play
+##### NUGU play
 
 | Address          | Method  | 설명|
 |---               |:---:  |---                          |
