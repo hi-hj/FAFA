@@ -10,20 +10,32 @@ import SearchInput from '~/Components/SearchInput';
 import SerchButton from '~/Components/SearchButton';
 import SearchButton from '~/Components/SearchButton';
 import { add } from 'react-native-reanimated';
+import { Alert } from 'react-native';
 
 const Container = Styled.View`
     flex: 2;
-    margin:10px;
+    margin-top : 5px;
 `;
 
 const StyleButton = Styled.TouchableOpacity`
-  padding: 8px;
+  padding: 4px;
+`;
+
+const Menu = Styled.View`
+flexDirection: row;
+`;
+
+const StyleIcon = Styled.TouchableOpacity`
+margin-left : 30px;
+margin-right : 30px;
 `;
 
 const SearchStyle = Styled.View`
-  margin-top: 10px;
-  flexDirection: row;
-  justify-content: center;
+  border: 2px;
+  height: 70px;
+  border-color:#f3f3f3;
+  margin-top : 5px;
+  padding-top : 15px;
   `;
 
 const Icon = Styled.Image`
@@ -123,10 +135,72 @@ const Map = ({ navigation }:Props) => {
       });
   };
 
+  const goCompany = (go:boolean) => {
+    if(go){
+      Alert.alert(                    // 말그대로 Alert를 띄운다
+        "위치확인",                    // 첫번째 text: 타이틀 제목
+        "도착하셨습니까?",                         // 두번째 text: 그 밑에 작은 제목
+        [                              // 버튼 배열
+          {
+            text: "아니요",                              // 버튼 제목
+            onPress: () => console.log("아닙니다"),     //onPress 이벤트시 콘솔창에 로그를 찍는다
+            style: "cancel"
+          },
+          { text: "네", onPress: () => setOnCompany(false) }, //버튼 제목
+        ],
+        { cancelable: false }
+      );
+    }else{
+      Alert.alert(                    // 말그대로 Alert를 띄운다
+        "위치확인",                    // 첫번째 text: 타이틀 제목
+        "출근하시겠습니까?",                         // 두번째 text: 그 밑에 작은 제목
+        [                              // 버튼 배열
+          {
+            text: "아니요",                              // 버튼 제목
+            onPress: () => console.log("아닙니다"),     //onPress 이벤트시 콘솔창에 로그를 찍는다
+            style: "cancel"
+          },
+          { text: "네", onPress: () => setOnCompany(true) }, //버튼 제목
+        ],
+        { cancelable: false }
+      );
+    }
+  }
+
+  const goHome = (go:boolean) => {
+    if(go){
+      Alert.alert(                    // 말그대로 Alert를 띄운다
+        "위치확인",                    // 첫번째 text: 타이틀 제목
+        "도착하셨습니까?",                         // 두번째 text: 그 밑에 작은 제목
+        [                              // 버튼 배열
+          {
+            text: "아니요",                              // 버튼 제목
+            onPress: () => console.log("아닙니다"),     //onPress 이벤트시 콘솔창에 로그를 찍는다
+            style: "cancel"
+          },
+          { text: "네", onPress: () => setOnRoad(false) }, //버튼 제목
+        ],
+        { cancelable: false }
+      );
+    }else{
+      Alert.alert(                    // 말그대로 Alert를 띄운다
+        "위치확인",                    // 첫번째 text: 타이틀 제목
+        "퇴근하시겠습니까?",                         // 두번째 text: 그 밑에 작은 제목
+        [                              // 버튼 배열
+          {
+            text: "아니요",                              // 버튼 제목
+            onPress: () => console.log("아닙니다"),     //onPress 이벤트시 콘솔창에 로그를 찍는다
+            style: "cancel"
+          },
+          { text: "네", onPress: () => setOnRoad(true) }, //버튼 제목
+        ],
+        { cancelable: false }
+      );
+    }
+  }
 
 
-
-    
+ 
   
 
   useEffect(() => {
@@ -229,96 +303,91 @@ const Map = ({ navigation }:Props) => {
           }
       </MapView>
     )}
+
     <SearchStyle>
-    { HCLocation && <SearchButton
-    label="집"
-    onPress={() => {
-      Geolocation.getCurrentPosition(
-        position => {
-          const {latitude, longitude} = position.coords;
-          const data = {
-            companyX: HCLocation.companyX,
-            companyY: HCLocation.companyY,
-            homeX: latitude,
-            homeY: longitude,
-            id: HCLocation.id,
-            role: HCLocation.role
-          }
-          const bData = {
-            user_id : HCLocation.id,
-            companyX: HCLocation.companyX,
-            companyY: HCLocation.companyY,
-            homeX: latitude,
-            homeY: longitude,
-          };
-          console.log(typeof(bData.user_id));
-          console.log(bData);
-          console.log("보냇다");
-          
-          fetchHCData(bData, bData.user_id);
-          setHCLocation(data);
-          updateKey(JSON.stringify(data));
-          console.log(data);
-        },
-        error => {
-          console.log(error.code, error.message);
-        },
-        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-      );    
-    } }
-    />}
+      <Menu>
+      { HCLocation && <StyleIcon
+      onPress={() => {
+        Geolocation.getCurrentPosition(
+          position => {
+            const {latitude, longitude} = position.coords;
+            const data = {
+              companyX: HCLocation.companyX,
+              companyY: HCLocation.companyY,
+              homeX: latitude,
+              homeY: longitude,
+              id: HCLocation.id,
+              role: HCLocation.role
+            }
+            const bData = {
+              user_id : HCLocation.id,
+              companyX: HCLocation.companyX,
+              companyY: HCLocation.companyY,
+              homeX: latitude,
+              homeY: longitude,
+            };
+            console.log(typeof(bData.user_id));
+            console.log(bData);
+            console.log("보냇다");
+            
+            fetchHCData(bData, bData.user_id);
+            setHCLocation(data);
+            updateKey(JSON.stringify(data));
+            console.log(data);
+          },
+          error => {
+            console.log(error.code, error.message);
+          },
+          {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+        );    
+      } }
+    ><Icon source={require('~/Assets/Images/homeicon.png')} /></StyleIcon> }
     
+      <StyleIcon
+      onPress={() => {
+       goCompany(onCompany);
+      } 
+      }
+      ><Icon source={require('~/Assets/Images/run.png')} /></StyleIcon>
+      <StyleIcon
+      onPress={() => {
+        goHome(onRoad);
+       } }
+      ><Icon source={require('~/Assets/Images/run2.png')} /></StyleIcon>
 
-  <SearchButton 
-    label= {onRoad ? "도착" : "집으로"}
-    style={{marginLeft: 5}}
-    onPress={() => {
-      setOnRoad(!onRoad);
-    }}
-    />
-
-<SearchButton 
-    label= {onCompany ? "도착" : "회사로"}
-    style={{marginLeft: 5}}
-    onPress={() => {
-      setOnCompany(!onCompany);
-    }}
-    />
-
-{ HCLocation && <SearchButton 
-    label= "회사"
-    style={{marginLeft: 5}}
-    onPress={() => {
-      Geolocation.getCurrentPosition(
-        position => {
-          const {latitude, longitude} = position.coords;
-          const data = {
-            companyX: latitude,
-            companyY: longitude,
-            homeX: HCLocation.homeX,
-            homeY: HCLocation.homeY,
-            id: HCLocation.id,
-            role: HCLocation.role
-          }
-          const bData = {
-            user_id : HCLocation.id,
-            companyX: latitude,
-            companyY: longitude,
-            homeX: HCLocation.homeX,
-            homeY: HCLocation.homeY
-          };
-          fetchHCData(bData, bData.user_id);
-          setHCLocation(data);
-          updateKey(JSON.stringify(data));
-          console.log(data);
-        },
-        error => {
-          console.log(error.code, error.message);
-        },
-        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-      );
-    }}
-    />}
+      { HCLocation &&    <StyleIcon
+      onPress={() => {
+        Geolocation.getCurrentPosition(
+          position => {
+            const {latitude, longitude} = position.coords;
+            const data = {
+              companyX: latitude,
+              companyY: longitude,
+              homeX: HCLocation.homeX,
+              homeY: HCLocation.homeY,
+              id: HCLocation.id,
+              role: HCLocation.role
+            }
+            const bData = {
+              user_id : HCLocation.id,
+              companyX: latitude,
+              companyY: longitude,
+              homeX: HCLocation.homeX,
+              homeY: HCLocation.homeY
+            };
+            fetchHCData(bData, bData.user_id);
+            setHCLocation(data);
+            updateKey(JSON.stringify(data));
+            console.log(data);
+          },
+          error => {
+            console.log(error.code, error.message);
+          },
+          {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+        );
+      }}
+    ><Icon source={require('~/Assets/Images/businessicon.png')} /></StyleIcon> }
+      </Menu>
     </SearchStyle>
   </Container>
   );
@@ -337,7 +406,8 @@ Map.navigationOptions = ({ navigation }: INaviProps ) => {
   headerTintColor:'#141414',
   headerStyle:{
     backgroundColor: '#ffffff',
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F3F3'
   },
   headerTitleStyle: {
       fontWeight: 'bold',
@@ -359,3 +429,34 @@ Map.navigationOptions = ({ navigation }: INaviProps ) => {
 export default Map;
 
 
+/*
+<SearchStyle>
+    { HCLocation && <SearchButton
+    label="집"
+    
+    />}
+    
+
+  <SearchButton 
+    label= {onRoad ? "도착" : "집으로"}
+    style={{marginLeft: 5}}
+    onPress={() => {
+      setOnRoad(!onRoad);
+    }}
+    />
+
+<SearchButton 
+    label= {onCompany ? "도착" : "회사로"}
+    style={{marginLeft: 5}}
+    onPress={() => {
+      setOnCompany(!onCompany);
+    }}
+    />
+
+<SearchButton 
+    label= "회사"
+    style={{marginLeft: 5}}
+    
+    />}
+    </SearchStyle>
+*/
