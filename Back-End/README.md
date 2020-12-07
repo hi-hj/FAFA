@@ -40,8 +40,8 @@
 </details>
 
 <details>
-<summary>Location : 부모의 최근 위치/summary>
-    
+<summary>Location : 부모의 최근 위치</summary>
+
 | 필드      | 타입  | 역할                          | 예시                   |
 |:---:        |:---:   |---                          |---                    |
 |`id`       |int    |(PK) 고유 id 값        | 1, 2, 3...             |
