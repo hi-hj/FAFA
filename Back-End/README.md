@@ -90,26 +90,32 @@
 |`alert_NUGU`      |POST   |NUGU speaker(자녀)의 요청 로그 생성|
 
 
-NUGU architecture
-발화속도 100% -> 90%
-문장 사이 묵음 구간 길이 600ms -> 800ms
-외부 연동 서버
-http://fafa-dev.ap-northeast-2.elasticbeanstalk.com
+- - -
 
+### NUGU play
+##### General setting
+사용자가 '미취학 아동'임을 고려하여 발화 설정 조정
+- 발화속도 : 100% -> 90%
+- 문장 사이 묵음 구간 길이 : 600ms -> 800ms
+- Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08)
+
+##### Play 구조
 ![../document/src/NUGUbuild.png](../document/src/NUGUbuild.png)
 
-inform.home
-예상 발화 : 엄마, 나 집이야 
+집에 왔다고 알림
+
+1. 집에 왔다고 알림
+
 | `발화예시`         | 엄마  | 나 집이야|
-|---               |:---:  |---:|
+|---               |---  |---|
 |`분류`  |부모  |집 도착 알림|
 |`Entity`| FAMILY_NAME| STATEMENT_HOME|
 
-Back-end URL/alert_NUGU
-method : POST
-request
-{
-    "version": "2.0",
+2. Back-end server에 Request 전송
+- URL : proxy server/alert_NUGU
+- METHOD : POST
+~~~json
+ "version": "2.0",
     "action": {
         "actionName": "alert_NUGU",
         "parameters": {
@@ -117,43 +123,21 @@ request
             { "type": "FAMILY_NAME", "value": "엄마"},
         }
     }
-}
+~~~
 
-/alert_NUGU
-Back-end -> views.alert -> 
-def alert(request):
-    # GET 'FAMILY_NAME' from NUGU speaker & database
-    nugu_body   = json.loads(request.body, encoding='utf-8')
-    FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME_').get('value')
-    user_id     = User.objects.filter(role=FAMILY_NAME).values()[0]['id']
-    context = {'FAMILY_NAME_': FAMILY_NAME}
-    result  = {}
-    result['version'] = nugu_body.get('version')
-    result['resultCode'] = 'OK'
-    result['output'] = context
-    # make Alert log for parent
-    Alert.objects.create(user_id_id=user_id,alertType=1)
-    return JsonResponse(result)
+3. Alert 테이블에 데이터 저장
+~~~json
+nugu_body   = json.loads(request.body, encoding='utf-8')
+FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME_').get('value')
+user_id     = User.objects.filter(role=FAMILY_NAME).values()[0]['id']
+Alert.objects.create(user_id_id=user_id,alertType=1)
+~~~
 
-save alert log to DB
-result
-    
-
-response to NUGU
-{
-    "version": "2.0",
-    "resultCode": "OK",
-    "output": {
-      "FAMILY_NAME": "엄마",
-    },
-
-
+4. 요청 전달 확인
 
 | `응답예시`         | 엄마  | 에게 집에 왔다고 알려 드렸어요|
-|---               |:---:  |---:|
+|---               |---  |---|
 |`Prompt`  |FAMILY_NAME  |fixed|
-
-
 
 
 
