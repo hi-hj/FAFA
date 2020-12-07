@@ -1,5 +1,8 @@
 # FAFA FrontEnd
 
+## prerequisite
+
+node,watchman,react-native-cli,Xcode,Cocoapods,JDK
 
 ## How to run locally
 
