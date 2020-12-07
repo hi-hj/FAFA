@@ -55,28 +55,30 @@
 
 
 
-views.py 링크
-API : Application
-부모
-| Address          | Method  | 설명|
-|---               |:---:  |---:                          |
-|`login`  |POST   |'user_name' 입력 시, 로그인 및 회원 정보 반환|
-|`set_location` |POST   |집&회사의 위도/경도 설정|
-|`set_location/user_id` |PUT/PATCH   |집&회사의 위도/경도 변경|
-|`add_location` |POST   |사용자의 현재 위치,시각,상태 저장|
-|`alert` |GET   |NUGU speaker(자녀)의 요청 로그 확인|
+### API : [urls.py](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/FAFA/urls.py)
 
-API : NUGU play
-부모
+
+1. Application
+
+
+| Address               | Method  | 설명|
+|---                    |:---:    |---                          |
+|`login`                |POST     |'user_name' 입력 시, 로그인 및 회원 정보 반환|
+|`set_location`         |POST     |집&회사의 위도/경도 입력|
+|`set_location/<user_id>` |PUT/PATCH|집&회사의 위도/경도 변경|
+|`add_location`         |POST     |사용자의 현재 위치,시각,상태 저장|
+|`alert`                |GET      |NUGU speaker(자녀)의 요청 로그 확인|
+
+2. NUGU play
+
 | Address          | Method  | 설명|
-|---               |:---:  |---:                          |
-|`health`  |POST   |NUGU play의 연결 상태 확인 요청 처리 |NUGU play : ask.location 요청 처리|
-|`location` |POST   |부모 위치 파악하는 기본 action|
-|`now_location` |POST   |집&회사 근처인 경우|
-|`between_location` |POST   |ML을 활용하여 출퇴근 여부 확인|
+|---               |:---:  |---                          |
+|`health`          |POST   |NUGU play의 연결 상태 확인 요청 처리 
+|`location`        |POST   |부모 위치 파악하는 기본 action|
+|`now_location`    |POST   |집&회사 근처인 경우|
+|`between_location`|POST   |ML을 활용하여 출퇴근 여부 확인|
 |`except_location` |POST   |집&회사 사이가 아닌 경우|
-|NUGU play : inform.home 요청 처리|
-|`alert_NUGU` |POST   |NUGU speaker(자녀)의 요청 로그 생성|
+|`alert_NUGU`      |POST   |NUGU speaker(자녀)의 요청 로그 생성|
 
 
 NUGU architecture
