@@ -1,18 +1,34 @@
-FAFA : Back-End
+# FAFA : Back-End
+### Django RestFramework 기반 REST API
+<div>
+<img src="https://img.shields.io/badge/NUGU%20play-2.0-brightgreen?style=flat-square" />
+</div>
+<div>
+<img src="https://img.shields.io/badge/Python-3.6-blue?style=flat-square" />
+<img src="https://img.shields.io/badge/Django-2.1.1-blue?style=flat-square" />
+<img src="https://img.shields.io/badge/DRF-3.11.0-blue?style=flat-square" />
+<img src="https://img.shields.io/badge/SQlite-3.21.0-blue?style=flat-square" />
+</div>
 
+- - -
 
-URLS -> Views -> Model & serializers
-1. Models
-models.py 링크
+### DataBase(SQlite)
+[models.py](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/FAFA/models.py)
 ![../document/src/DataModel.png](../document/src/DataModel.png)
+
 User
+
+부모에 대한 테이블
 | 필드      | 타입  | 역할                          | 예시                   |
 |---        |:---:  |---:                          |---:                    |
 |`id`       |int    |(PK)사용자 고유 id 값         | 1, 2, 3...             |
 |`user_name`|char   |Application 로그인 시 필요한 ID| 'mother', 'father' ... |
 |`role`     |varchar|NUGU에서 전달 받은 Entity(FAMILY_NAME) | '엄마', '아빠'          |
 
+
 SetLocation
+
+부모의 회사 or 집의 위도&경도
 | 필드      | 타입  | 역할                          | 예시                   |
 |---        |:---:  |---:                          |---:                    |
 |`id`       |int    |(PK) 고유 id 값        | 1, 2, 3...             |
