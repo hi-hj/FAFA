@@ -231,7 +231,7 @@ const Map = ({ navigation }:Props) => {
     )}
     <SearchStyle>
     { HCLocation && <SearchButton
-    label="Home"
+    label="집"
     onPress={() => {
       Geolocation.getCurrentPosition(
         position => {
@@ -286,7 +286,7 @@ const Map = ({ navigation }:Props) => {
     />
 
 { HCLocation && <SearchButton 
-    label="Company"
+    label= "회사"
     style={{marginLeft: 5}}
     onPress={() => {
       Geolocation.getCurrentPosition(

@@ -5,14 +5,13 @@ const StyleButton = Styled.TouchableOpacity`
   width: 23%;
   height: 40px;
   border-radius: 10px;
-  border : 1px;
   justify-content: center;
   align-items: center;
   margin : 5px;
-  background-color: #FFFFFF;
+  background-color: #555555;
 `;
 const Label = Styled.Text`
-  color: #000000;
+  color: #ffffff;
 `;
 
 interface Props {
