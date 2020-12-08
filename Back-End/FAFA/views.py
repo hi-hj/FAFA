@@ -70,7 +70,7 @@ def location(request):
                     'DESTI_LOCATION' : '회사',
                     'STATUS'         : '출근하는'
                     }
-    
+    ##
     # except_location
     elif not(small_X < now_X < big_X) and not(small_Y < now_Y < big_Y):
         context     = { 'FAMILY_NAME'    : FAMILY_NAME}
