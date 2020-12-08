@@ -101,7 +101,7 @@
 Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 기준)
 
 **Play 구조**
-![../document/src/NUGUbuild.png](../document/src/NUGUbuild.png)
+<img src="../document/src/NUGUbuild.png">
 
 #### :man::exclamation: 집에 왔다고 알리기
 
