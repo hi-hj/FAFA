@@ -40,8 +40,8 @@
 </details>
 
 <details>
-<summary>Location : 부모의 최근 위치</summary>
-
+<summary>Location : 부모의 최근 위치 </summary>
+    
 | 필드      | 타입  | 역할                          | 예시                   |
 |:---:        |:---:   |---                          |---                    |
 |`id`       |int    |(PK) 고유 id 값        | 1, 2, 3...             |
@@ -97,7 +97,7 @@
 - 발화속도 : 100% -> 90%
 - 문장 사이 묵음 구간 길이 : 600ms -> 800ms
 
-Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08)
+Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 기준)
 
 ##### Play 구조
 ![../document/src/NUGUbuild.png](../document/src/NUGUbuild.png)
@@ -175,14 +175,18 @@ B. ask.location
     |---        |--- |---| ---| ---|
     |`Prompt`  |FAMILY_NAME  |fix|LOCATION | fix|
 
+
     3.2 between_location : 부모의 최근 위치가 회사-집 사이
     - 출근/퇴근은 ML의 randomForest 활용하여 분류
+
+    ~~~json
     "output" :{ 'FAMILY_NAME'    : FAMILY_NAME,
                             'START_LOCATION' : '회사',
                             'DESTI_LOCATION' : '집',
                             'STATUS'         : '퇴근하는'
                             }
-
+    ~~~
+    
     | `응답예시` | 엄마      |는 |회사 |에서 | 집|으로 |퇴근하는| 중이에요|
     |---        |---        |---| ---| ---| ---| ---| ---|---|
     |`Prompt`  |FAMILY_NAME |fix|START_LOCATION|fix|DESTI_LOCATION|fixed|STATUS|fix|
