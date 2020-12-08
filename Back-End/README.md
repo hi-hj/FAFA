@@ -12,7 +12,7 @@
 
 - - -
 
-### DataBase : [models.py](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/FAFA/models.py)
+### :page_facing_up: DataBase : [models.py](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/FAFA/models.py)
 <img src="../document/src/DataModel.png" height="500">
 
 <details>
@@ -66,19 +66,9 @@
 
 - - -
 
-### API : [urls.py](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/FAFA/urls.py)
+### :arrow_forward: API : [urls.py](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/FAFA/urls.py)
 
-##### Application
-
-| Address               | Method  | 설명|
-|---                    |:---:    |---                          |
-|`login`                |POST     |'user_name' 입력 시, 로그인 및 회원 정보 반환|
-|`set_location`         |POST     |집&회사의 위도/경도 입력|
-|`set_location/<user_id>` |PUT/PATCH|집&회사의 위도/경도 변경|
-|`add_location`         |POST     |사용자의 현재 위치,시각,상태 저장|
-|`alert`                |GET      |NUGU speaker(자녀)의 요청 로그 확인|
-
-##### NUGU play
+#### :baby: NUGU play
 
 | Address          | Method  | 설명|
 |---               |:---:  |---                          |
@@ -89,30 +79,41 @@
 |`except_location` |POST   |집&회사 사이가 아닌 경우|
 |`alert_NUGU`      |POST   |NUGU speaker(자녀)의 요청 로그 생성|
 
+#### :man: Application
+
+| Address               | Method  | 설명|
+|---                    |:---:    |---                          |
+|`login`                |POST     |'user_name' 입력 시, 로그인 및 회원 정보 반환|
+|`set_location`         |POST     |집&회사의 위도/경도 입력|
+|`set_location/<user_id>` |PUT/PATCH|집&회사의 위도/경도 변경|
+|`add_location`         |POST     |사용자의 현재 위치,시각,상태 저장|
+|`alert`                |GET      |NUGU speaker(자녀)의 요청 로그 확인|
+
+
 - - -
 
-### NUGU play
-##### General setting
+### :loudspeaker: NUGU play
+##### :wrench: General setting
 사용자가 '미취학 아동'임을 고려하여 발화 설정 조정
 - 발화속도 : 100% -> 90%
 - 문장 사이 묵음 구간 길이 : 600ms -> 800ms
 
 Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 기준)
 
-##### Play 구조
+Play 구조
 ![../document/src/NUGUbuild.png](../document/src/NUGUbuild.png)
 
-A. inform.home
+#### :mailbox: 집에 왔다고 알리기
 
-1. 집에 왔다고 알림
+1. Intent : inform.home
 
-| `발화예시`         | 엄마  | 나 집이야|
+| 발화예시         | 엄마  | 나 집이야|
 |---               |---  |---|
-|`분류`  |부모  |집 도착 알림|
-|`Entity`| FAMILY_NAME| STATEMENT_HOME|
+|분류  |부모  |집 도착 알림|
+|Entity| `FAMILY_NAME`| STATEMENT_HOME|
 
-2. Back-end server에 Request 전송
-- URL : proxy server/alert_NUGU
+2. Back-end server에 Request 요청
+- URL : Back-end/alert_NUGU
 - METHOD : POST
 ~~~json
  "version": "2.0",
@@ -125,19 +126,21 @@ A. inform.home
     }
 ~~~
 
-3. Alert 테이블에 데이터 저장
+3. Database에 요청 로그 저장
 ~~~json
+# NUGU family의 Request에서 FAMILY_NAME 값 확인
 nugu_body   = json.loads(request.body, encoding='utf-8')
 FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME_').get('value')
-user_id     = User.objects.filter(role=FAMILY_NAME).values()[0]['id']
+user_id     = User.objects.filter(role=FAMILY_NAME).values()[0]["id"]
+# Alert 테이블에 데이터 추가
 Alert.objects.create(user_id_id=user_id,alertType=1)
 ~~~
 
 4. 요청 전달 확인
 
-| `응답예시`         | 엄마  | 에게 집에 왔다고 알려 드렸어요|
+| 응답예시         | 엄마  | 에게 집에 왔다고 알려 드렸어요|
 |---               |---  |---|
-|`Prompt`  |FAMILY_NAME  |fixed|
+|Prompt  |`FAMILY_NAME`  |fixed|
 
 
 B. ask.location
@@ -186,7 +189,7 @@ B. ask.location
                             'STATUS'         : '퇴근하는'
                             }
     ~~~
-    
+
     | `응답예시` | 엄마      |는 |회사 |에서 | 집|으로 |퇴근하는| 중이에요|
     |---        |---        |---| ---| ---| ---| ---| ---|---|
     |`Prompt`  |FAMILY_NAME |fix|START_LOCATION|fix|DESTI_LOCATION|fixed|STATUS|fix|
