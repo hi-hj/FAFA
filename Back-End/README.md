@@ -107,7 +107,7 @@ Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 �
 
 1. Intent : inform.home
 
-    | 발화예시         | 엄마  | 나 집이야|
+    | 발화 예시         | 엄마  | 나 집이야|
     |:---:               |---  |---|
     |분류  |부모  |집 도착 알림|
     |Entity| `FAMILY_NAME`| STATEMENT_HOME|
@@ -117,11 +117,10 @@ Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 �
     > METHOD : POST
     ~~~json
     "version": "2.0",
-        "action": {
-            "actionName": "alert_NUGU",
-            "parameters": {
-                "FAMILY_NAME": 
-                { "type": "FAMILY_NAME", "value": "엄마"},
+    "action": {
+        "actionName": "alert_NUGU",
+        "parameters": {
+            "FAMILY_NAME":{"type": "FAMILY_NAME", "value": "엄마"}
             }
         }
     ~~~
@@ -132,13 +131,14 @@ Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 �
     nugu_body   = json.loads(request.body, encoding='utf-8')
     FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME_').get('value')
     user_id     = User.objects.filter(role=FAMILY_NAME).values()[0]["id"]
+    
     # Alert 테이블에 데이터 추가
     Alert.objects.create(user_id_id=user_id,alertType=1)
     ~~~
 
 4. Action : alert_NUGU
 
-    | 응답예시         | 엄마  | 에게 집에 왔다고 알려 드렸어요|
+    | 응답 예시         | 엄마  | 에게 집에 왔다고 알려 드렸어요|
     |:---:               |---  |---|
     |Prompt  |`FAMILY_NAME`  |fix|
 
@@ -163,31 +163,31 @@ Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 �
     "action": {
         "actionName": "location",
         "parameters": {
-            "FAMILY_NAME":{ "type": "FAMILY_NAME", "value": "엄마"},
-            // Back-end parameter 
-            "LOCATION": {"type": null, "value": null},
-            "STATUS": {"type": null, "value": null},
+            "FAMILY_NAME"   : {"type": "FAMILY_NAME", "value": "엄마"}, 
+            "LOCATION"      : {"type": null, "value": null},
+            "STATUS"        : {"type": null, "value": null},
             "START_LOCATION": {"type": null, "value": null},
             "DESTI_LOCATION": {"type": null, "value": null}
             }        
         }
     ~~~
-3. 부모의 위치에 따라 다른 응답 반환
 
-   3.1 set_location : 최근 위치가 회사|집
+3. 부모의 위치에 따라 다른 Action 반환
+
+   3.1 set_location : 최근 위치가 회사 | 집
     ~~~json
     "output": {
         "FAMILY_NAME" : "엄마",
         "LOCATION"    : "집"
-        }
+    }
     ~~~
 
-    | `응답예시` | 엄마|는 |회사 |에 있어요|
-    |---        |--- |---| ---| ---|
-    |`Prompt`  |FAMILY_NAME  |fix|LOCATION | fix|
+    | 응답예시 | 엄마|는 |회사 |에 있어요|
+    |:---:        |--- |---| ---| ---|
+    |Prompt  |`FAMILY_NAME`  |fix|`LOCATION` | fix|
 
     3.2 between_location : 최근 위치가 회사-집 사이
-    >출근/퇴근은 ML의 randomForest 활용하여 분류
+    > 출근/퇴근은 ML의 randomForest 활용하여 분류
 
     ~~~json
     "output" :{ 
@@ -198,16 +198,16 @@ Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 �
         }
     ~~~
     | 응답예시 | 엄마      |는 |회사 |에서 | 집|으로 |퇴근하는| 중이에요|
-    |---        |---        |---| ---| ---| ---| ---| ---|---|
+    |:---:        |---        |---| ---| ---| ---| ---| ---|---|
     |Prompt  |`FAMILY_NAME` |fix|`START_LOCATION`|fix|`DESTI_LOCATION`|fixed|`STATUS`|fix|
 
 
     3.3 except_location : 최근 위치가 회사-집 사이가 아닌 경우
     ~~~json
     "output": {
-    "FAMILY_NAME": "엄마"
+        "FAMILY_NAME": "엄마"
     }
     ~~~
     | 응답예시         | 엄마  | 는 외출 중이에요|
-    |---               |---  |---|
+    |:---:               |---  |---|
     |Prompt  |`FAMILY_NAME`  |fix|
