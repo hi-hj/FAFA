@@ -99,6 +99,8 @@ NUGU speaker를 사용하는 자녀
 
 Application을 사용하는 부모
 
+자세한 화면 설명은 [여기](https://github.com/HYUcoolguy/FAFA/blob/main/Front-End/README.md)서 확인하세요!
+
 *최근 위치 정보는 100m 이동 시마다 자동으로 서버에 전송*
 
 ![document/src/GUI.png](document/src/GUI.png)
