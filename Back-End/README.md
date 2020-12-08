@@ -1,5 +1,5 @@
 # FAFA : Back-End
-### Django RestFramework 기반 REST API
+### REST API : Django & DRF
 <div>
 <img src="https://img.shields.io/badge/NUGU%20play-2.0-brightgreen?style=flat-square" />
 </div>
