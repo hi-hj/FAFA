@@ -88,6 +88,9 @@ const Alarm =  ({ navigation }: Props) => {
         
       }, []);
 
+    
+    
+
     return (
         <Container>
         { alarmData && (
