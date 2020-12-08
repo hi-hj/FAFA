@@ -1,10 +1,6 @@
 # FAFA : Back-End
-<<<<<<< HEAD
 ### REST API : Django / DRF
 
-=======
-### REST API : Django & DRF
->>>>>>> 405e36f939222a3d66fd04f5103fd12df5a9bc90
 <div>
 <img src="https://img.shields.io/badge/NUGU%20play-2.0-brightgreen?style=flat-square" />
 </div>
@@ -14,9 +10,6 @@
 <img src="https://img.shields.io/badge/DRF-3.11.0-blue?style=flat-square" />
 <img src="https://img.shields.io/badge/SQlite-3.21.0-blue?style=flat-square" />
 </div>
-
-[Front-End](https://github.com/HYUcoolguy/FAFA/blob/main/Front-End/README.md) 문서에서 애플리케이션 실행 방법과<br/>
-[Back-End](https://github.com/HYUcoolguy/FAFA/blob/main/Front-End/README.md) 문서에서 NUGU play 및 전체 구조를 확인하세요.
 
 
 - - - 
