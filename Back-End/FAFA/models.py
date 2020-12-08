@@ -27,8 +27,8 @@ class Location(models.Model):
     geoX = models.FloatField()
     geoY = models.FloatField()
     timeStamp = models.DateTimeField(auto_now_add=True)
-    onHomeRoad = models.IntegerField(null=True)
-    onCompanyRoad = models.IntegerField(null=True)
+    onHomeRoad = models.IntegerField(default=0)
+    onCompanyRoad = models.IntegerField(default=0)
 
 
 class Alert(models.Model):
