@@ -96,8 +96,8 @@
 ### :loudspeaker: NUGU play
 #### :wrench: General setting
 사용자가 '미취학 아동'임을 고려하여 발화 설정 조정
-- 발화속도 : 100% -> 90%
-- 문장 사이 묵음 구간 길이 : 600ms -> 800ms
+> 발화속도 : 100% -> 90%<br>
+> 문장 사이 묵음 구간 길이 : 600ms -> 800ms
 
 Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 기준)
 
@@ -114,8 +114,8 @@ Play 구조
     |Entity| `FAMILY_NAME`| STATEMENT_HOME|
 
 2. Back-end server에 Request 요청
-    - URL : Back-end/alert_NUGU
-    - METHOD : POST
+    > URL : Back-end/alert_NUGU <br>
+    > METHOD : POST
     ~~~json
     "version": "2.0",
         "action": {
