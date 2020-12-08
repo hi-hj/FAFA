@@ -1,0 +1,6 @@
+module Pods_Nugu_NuguTests {
+  umbrella header "Pods-Nugu-NuguTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
