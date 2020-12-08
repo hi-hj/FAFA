@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # OSX
 #
 .DS_Store
@@ -57,3 +58,30 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+=======
+# Environments
+**/myvenv/
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pythonenv*
+
+### venv ###
+# Virtualenv
+# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+pip-selfcheck.json
+
+
+markdownpad-github.css
+>>>>>>> 80bfdf6f50ee05c32c950fbb0daa839a3958c004
