@@ -1,6 +1,10 @@
 # FAFA : Back-End
+<<<<<<< HEAD
 ### REST API : Django / DRF
 
+=======
+### REST API : Django & DRF
+>>>>>>> 405e36f939222a3d66fd04f5103fd12df5a9bc90
 <div>
 <img src="https://img.shields.io/badge/NUGU%20play-2.0-brightgreen?style=flat-square" />
 </div>
