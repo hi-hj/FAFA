@@ -9,7 +9,7 @@
 
 - - - 
 
-### 설치
+### :smile: 설치
 ```bash
 $ npm install
 $ react-native run-ios
@@ -17,7 +17,7 @@ $ react-native run-ios
 
 - - -
 
-### Application 설명
+### :eyes: 화면 설명
 
 
 <img src="../document/src/page1.png" width="200">
