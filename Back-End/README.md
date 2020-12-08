@@ -72,23 +72,22 @@
 
 | Address          | Method  | 설명|
 |---               |:---:  |---                          |
-|`health`          |POST   |NUGU play의 연결 상태 확인 요청 처리 
-|`location`        |POST   |부모 위치 파악하는 기본 action|
+|`health`          |POST   |NUGU play의 연결 상태 확인 | 
+|`location`        |POST   |부모 위치 확인 요청 (default)|
 |`now_location`    |POST   |집&회사 근처인 경우|
-|`between_location`|POST   |ML을 활용하여 출퇴근 여부 확인|
+|`between_location`|POST   |집&회사 사이, ML을 활용하여 출퇴근 분류|
 |`except_location` |POST   |집&회사 사이가 아닌 경우|
-|`alert_NUGU`      |POST   |NUGU speaker(자녀)의 요청 로그 생성|
+|`alert_NUGU`      |POST   |부모에게 요청 알림|
 
 #### :man: Application
 
 | Address               | Method  | 설명|
 |---                    |:---:    |---                          |
-|`login`                |POST     |'user_name' 입력 시, 로그인 및 회원 정보 반환|
-|`set_location`         |POST     |집&회사의 위도/경도 입력|
+|`login`                |POST     |로그인 및 회원 정보 반환|
+|`set_location`         |POST     |집&회사의 위도/경도 추가|
 |`set_location/<user_id>` |PUT/PATCH|집&회사의 위도/경도 변경|
 |`add_location`         |POST     |사용자의 현재 위치,시각,상태 저장|
 |`alert`                |GET      |NUGU speaker(자녀)의 요청 로그 확인|
-
 
 - - -
 
@@ -196,7 +195,7 @@ Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 �
     ~~~
     | 응답예시 | 엄마      |는 |회사 |에서 | 집|으로 |퇴근하는| 중이에요|
     |:---:        |---        |---| ---| ---| ---| ---| ---|---|
-    |Prompt  |`FAMILY_NAME` |fix|`START_LOCATION`|fix|`DESTI_LOCATION`|fixed|`STATUS`|fix|
+    |Prompt  |`FAMILY_NAME` |fix|`START_LOCATION`|fix|`DESTI_LOCATION`|fix|`STATUS`|fix|
 
 
     3.3 except_location : 최근 위치가 회사-집 사이가 아닌 경우
