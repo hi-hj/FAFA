@@ -92,7 +92,6 @@
 
 - - -
 
-
 ### :loudspeaker: NUGU play
 #### :wrench: General setting
 사용자가 '미취학 아동'임을 고려하여 발화 설정 조정
@@ -101,15 +100,15 @@
 
 Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 기준)
 
-Play 구조
+**Play 구조**
 ![../document/src/NUGUbuild.png](../document/src/NUGUbuild.png)
 
-#### :mailbox: 집에 왔다고 알리기
+#### :man::exclamation: 집에 왔다고 알리기
 
 1. Intent : inform.home
 
     | 발화예시         | 엄마  | 나 집이야|
-    |---               |---  |---|
+    |:---:               |---  |---|
     |분류  |부모  |집 도착 알림|
     |Entity| `FAMILY_NAME`| STATEMENT_HOME|
 
@@ -137,71 +136,78 @@ Play 구조
     Alert.objects.create(user_id_id=user_id,alertType=1)
     ~~~
 
-4. 요청 전달 확인
+4. Action : alert_NUGU
 
     | 응답예시         | 엄마  | 에게 집에 왔다고 알려 드렸어요|
-    |---               |---  |---|
-    |Prompt  |`FAMILY_NAME`  |fixed|
+    |:---:               |---  |---|
+    |Prompt  |`FAMILY_NAME`  |fix|
+
+<br>
+<br>
 
 
-B. ask.location
+#### :baby::question: 부모의 위치 물어보기
 
-1. 부모의 현재 위치 요청
+1. Intent : ask.location
 
-| `발화예시`         | 엄마  | 지금 어디야|
-|---               |:---:  |---:|
-|`분류`  |부모  |현재 위치 요청|
-|`Entity`| FAMILY_NAME| STATEMENT_LOCATION|
+    | 발화예시 |  엄마  | 지금 어디야|
+    |:---:               |---  |---|
+    |분류  |부모  |현재 위치 요청|
+    |Entity| `FAMILY_NAME`| STATEMENT_LOCATION|
 
-2. Back-end server에 Request 전송
-- URL : proxy server/location
-- METHOD : POST
-~~~json
- "version": "2.0",
+2. Back-end server에 Request 요청
+    >URL : proxy server/location <br>
+    >METHOD : POST
+    ~~~json
+    "version": "2.0",
     "action": {
         "actionName": "location",
         "parameters": {
-            "FAMILY_NAME": 
-            { "type": "FAMILY_NAME", "value": "엄마"},
+            "FAMILY_NAME":{ "type": "FAMILY_NAME", "value": "엄마"},
+            // Back-end parameter 
+            "LOCATION": {"type": null, "value": null},
+            "STATUS": {"type": null, "value": null},
+            "START_LOCATION": {"type": null, "value": null},
+            "DESTI_LOCATION": {"type": null, "value": null}
+            }        
         }
-    }
-~~~
-3. Back-end server에서 받은 Response
+    ~~~
+3. 부모의 위치에 따라 다른 응답 반환
 
-    3.1 set_location : 부모의 최근 위치 정보가 회사 or 집
+   3.1 set_location : 최근 위치가 회사|집
     ~~~json
     "output": {
-        "FAMILY_NAME": "엄마",
-        "LOCATION"    : '집'
-    }
+        "FAMILY_NAME" : "엄마",
+        "LOCATION"    : "집"
+        }
     ~~~
+
     | `응답예시` | 엄마|는 |회사 |에 있어요|
     |---        |--- |---| ---| ---|
     |`Prompt`  |FAMILY_NAME  |fix|LOCATION | fix|
 
-
-    3.2 between_location : 부모의 최근 위치가 회사-집 사이
-    - 출근/퇴근은 ML의 randomForest 활용하여 분류
+    3.2 between_location : 최근 위치가 회사-집 사이
+    >출근/퇴근은 ML의 randomForest 활용하여 분류
 
     ~~~json
-    "output" :{ 'FAMILY_NAME'    : FAMILY_NAME,
-                            'START_LOCATION' : '회사',
-                            'DESTI_LOCATION' : '집',
-                            'STATUS'         : '퇴근하는'
-                            }
-    ~~~
-
-    | `응답예시` | 엄마      |는 |회사 |에서 | 집|으로 |퇴근하는| 중이에요|
-    |---        |---        |---| ---| ---| ---| ---| ---|---|
-    |`Prompt`  |FAMILY_NAME |fix|START_LOCATION|fix|DESTI_LOCATION|fixed|STATUS|fix|
-
-
-    3.3 except_location : 부모의 최근 위치가 회사-집 사이가 아닌 경우
-    ~~~json
-        "output": {
-        "FAMILY_NAME": "엄마"
+    "output" :{ 
+        "FAMILY_NAME"    : "엄마",
+        "START_LOCATION" : "회사",
+        "DESTI_LOCATION" : "집",
+        "STATUS"         : "퇴근하는"
         }
     ~~~
-    | `응답예시`         | 엄마  | 는 외출 중이에요|
+    | 응답예시 | 엄마      |는 |회사 |에서 | 집|으로 |퇴근하는| 중이에요|
+    |---        |---        |---| ---| ---| ---| ---| ---|---|
+    |Prompt  |`FAMILY_NAME` |fix|`START_LOCATION`|fix|`DESTI_LOCATION`|fixed|`STATUS`|fix|
+
+
+    3.3 except_location : 최근 위치가 회사-집 사이가 아닌 경우
+    ~~~json
+    "output": {
+    "FAMILY_NAME": "엄마"
+    }
+    ~~~
+    | 응답예시         | 엄마  | 는 외출 중이에요|
     |---               |---  |---|
-    |`Prompt`  |`FAMILY_NAME`  |fix|
+    |Prompt  |`FAMILY_NAME`  |fix|
