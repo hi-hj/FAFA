@@ -22,7 +22,7 @@
 |:---:       |:---:   |---                          |---                    |
 |`id`       |int    |(PK)사용자 고유 id 값         | 1, 2, 3...             |
 |`user_name`|char   |Application 로그인 시 필요한 ID| 'mother', 'father' |
-|`role`     |varchar|NUGU에서 전달 받은 Entity(FAMILY_NAME) | '엄마', '아빠'          |
+|`role`     |varchar|가족 구성원. NUGU play와 Application 연결| '엄마', '아빠'          |
 </details>
 
 
@@ -60,7 +60,8 @@
 |:---:        |:---:   |---                          |---                    |
 |`id`       |int    |(PK) 고유 id 값        | 1, 2, 3...             |
 |`user_id`  |int   |(FK) User 테이블의 id | 1, 2, 3 ... |
-|`alertType`     |int|NUGU 스피커의 Intent 분류| 0, 1  |
+|`alertType`     |int|0 : '아이가 찾고 있어요' <br>
+                     1 : '아이가 집에 도착했어요' | 0, 1  |
 |`timeStamp`     |date|자녀의 NUGU 스피커 요청을 저장한 시각 |2020-12-02T...    |
 </details>
 
@@ -141,9 +142,6 @@ Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 �
     | 응답 예시         | 엄마  | 에게 집에 왔다고 알려 드렸어요|
     |:---:               |---  |---|
     |Prompt  |`FAMILY_NAME`  |fix|
-
-<br>
-<br>
 
 
 #### :baby::question: 부모의 위치 물어보기
