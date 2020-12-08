@@ -1,9 +1,5 @@
 # FAFA : Back-End
-<<<<<<< .merge_file_a37240
-### REST API : Django / DRF
-=======
 ### REST API : Django & DRF
->>>>>>> .merge_file_a45356
 <div>
 <img src="https://img.shields.io/badge/NUGU%20play-2.0-brightgreen?style=flat-square" />
 </div>
