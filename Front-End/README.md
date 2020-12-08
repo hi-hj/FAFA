@@ -19,9 +19,9 @@ $ react-native run-ios
 
 <div>
 <img src="../document/src/page1.png" width="200">
-1. 로그인
+1. 로그인 지정된 '아이디'와 '비밀번호'를 입력하여 로그인합니다.
 </div>
-지정된 '아이디'와 '비밀번호'를 입력하여 로그인합니다.
+
 
 <img src="../document/src/page2.png" width="200">
 2. 랜딩 페이지
