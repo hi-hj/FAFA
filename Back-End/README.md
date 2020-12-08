@@ -92,8 +92,9 @@
 
 - - -
 
+
 ### :loudspeaker: NUGU play
-##### :wrench: General setting
+#### :wrench: General setting
 사용자가 '미취학 아동'임을 고려하여 발화 설정 조정
 - 발화속도 : 100% -> 90%
 - 문장 사이 묵음 구간 길이 : 600ms -> 800ms
@@ -107,40 +108,40 @@ Play 구조
 
 1. Intent : inform.home
 
-| 발화예시         | 엄마  | 나 집이야|
-|---               |---  |---|
-|분류  |부모  |집 도착 알림|
-|Entity| `FAMILY_NAME`| STATEMENT_HOME|
+    | 발화예시         | 엄마  | 나 집이야|
+    |---               |---  |---|
+    |분류  |부모  |집 도착 알림|
+    |Entity| `FAMILY_NAME`| STATEMENT_HOME|
 
 2. Back-end server에 Request 요청
-- URL : Back-end/alert_NUGU
-- METHOD : POST
-~~~json
- "version": "2.0",
-    "action": {
-        "actionName": "alert_NUGU",
-        "parameters": {
-            "FAMILY_NAME": 
-            { "type": "FAMILY_NAME", "value": "엄마"},
+    - URL : Back-end/alert_NUGU
+    - METHOD : POST
+    ~~~json
+    "version": "2.0",
+        "action": {
+            "actionName": "alert_NUGU",
+            "parameters": {
+                "FAMILY_NAME": 
+                { "type": "FAMILY_NAME", "value": "엄마"},
+            }
         }
-    }
-~~~
+    ~~~
 
 3. Database에 요청 로그 저장
-~~~json
-# NUGU family의 Request에서 FAMILY_NAME 값 확인
-nugu_body   = json.loads(request.body, encoding='utf-8')
-FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME_').get('value')
-user_id     = User.objects.filter(role=FAMILY_NAME).values()[0]["id"]
-# Alert 테이블에 데이터 추가
-Alert.objects.create(user_id_id=user_id,alertType=1)
-~~~
+    ~~~json
+    # NUGU family의 Request에서 FAMILY_NAME 값 확인
+    nugu_body   = json.loads(request.body, encoding='utf-8')
+    FAMILY_NAME = nugu_body.get('action').get('parameters').get('FAMILY_NAME_').get('value')
+    user_id     = User.objects.filter(role=FAMILY_NAME).values()[0]["id"]
+    # Alert 테이블에 데이터 추가
+    Alert.objects.create(user_id_id=user_id,alertType=1)
+    ~~~
 
 4. 요청 전달 확인
 
-| 응답예시         | 엄마  | 에게 집에 왔다고 알려 드렸어요|
-|---               |---  |---|
-|Prompt  |`FAMILY_NAME`  |fixed|
+    | 응답예시         | 엄마  | 에게 집에 왔다고 알려 드렸어요|
+    |---               |---  |---|
+    |Prompt  |`FAMILY_NAME`  |fixed|
 
 
 B. ask.location
