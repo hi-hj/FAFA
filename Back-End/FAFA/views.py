@@ -85,7 +85,7 @@ def location(request):
     Alert.objects.create(user_id_id=user_id,alertType=0)
     return JsonResponse(result)
     
-
+###
 # inform.home
 def alert(request):
     # GET 'FAMILY_NAME' from NUGU speaker & database
