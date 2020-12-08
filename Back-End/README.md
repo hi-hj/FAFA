@@ -15,7 +15,12 @@
 <img src="https://img.shields.io/badge/SQlite-3.21.0-blue?style=flat-square" />
 </div>
 
-- - -
+[Front-End](https://github.com/HYUcoolguy/FAFA/blob/main/Front-End/README.md) 문서에서 애플리케이션 실행 방법과<br/>
+[Back-End](https://github.com/HYUcoolguy/FAFA/blob/main/Front-End/README.md) 문서에서 NUGU play 및 전체 구조를 확인하세요.
+
+
+- - - 
+
 
 ### :page_facing_up: DataBase : [models.py](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/FAFA/models.py)
 <img src="../document/src/DataModel.png" height="500">
