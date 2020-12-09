@@ -1,5 +1,6 @@
 # FAFA : Back-End
-### REST API : Django & DRF
+### REST API : Django / DRF
+
 <div>
 <img src="https://img.shields.io/badge/NUGU%20play-2.0-brightgreen?style=flat-square" />
 </div>
@@ -10,7 +11,9 @@
 <img src="https://img.shields.io/badge/SQlite-3.21.0-blue?style=flat-square" />
 </div>
 
-- - -
+
+- - - 
+
 
 ### :page_facing_up: DataBase : [models.py](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/FAFA/models.py)
 <img src="../document/src/DataModel.png" height="500">

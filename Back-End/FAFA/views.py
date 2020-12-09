@@ -26,6 +26,8 @@ def location(request):
     now_X        = now_location.geoX
     now_Y        = now_location.geoY
     now_time     = int(now_location.timeStamp.hour * 60) + int(now_location.timeStamp.minute)
+    now_home     = now_location.onHomeRoad
+    now_company  = now_location.onCompanyRoad
     home_X       = set_location.values()[0]['homeX']
     home_Y       = set_location.values()[0]['homeY']
     company_X    = set_location.values()[0]['companyX']
@@ -35,6 +37,15 @@ def location(request):
     small_X      = min(home_X, company_Y)
     big_Y        = max(home_Y, company_Y)
     small_Y      = min(home_Y, company_Y)
+    # To use randomForest
+    train        = pandas.read_csv('static/train.csv')
+    X            = train[['geoX', 'geoY', 'time']]
+    Y            = train[['onHomeRoad', 'onCompanyRoad']]
+    forest       = RandomForestClassifier(n_estimators=100)
+    forest.fit(X,Y)
+    test         = numpy.array((now_X, now_Y, now_time)).reshape(1,3)
+    ML_result    = forest.predict(test)
+
 
     # now_location
     if abs(now_X - home_X)<0.001 and abs(now_Y - home_Y)<0.0015:
@@ -45,32 +56,29 @@ def location(request):
         context = { 'FAMILY_NAME' : FAMILY_NAME,
                     'LOCATION'     : '회사'
                     }
+
     # between_location
-    elif now_X in numpy.arange(small_X, big_X) and now_Y in numpy.arange(small_Y, big_Y):
-        # Machine Learning - randomForest method
-        train       = pandas.read_csv('static/train.csv')
-        X           = train[['geoX', 'geoY', 'time']]
-        Y           = train[['onHomeRoad', 'onCompanyRoad']]
-        forest      = RandomForestClassifier(n_estimators=100)
-        forest.fit(X,Y)
-        test        = numpy.array((now_X, now_Y, now_time)).reshape(1,3)
-        ML_result   = forest.predict(test)
-        # defined off work
-        if ML_result[0][0] == 1 and ML_result[0][1] == 0:
-            context = { 'FAMILY_NAME'    : FAMILY_NAME,
-                        'START_LOCATION' : '회사',
-                        'DESTI_LOCATION' : '집',
-                        'STATUS'         : '퇴근하는'
-                        }
-        # defined on work
-        elif ML_result[0][0] == 0 and ML_result[0][0] == 1:
-            context = { 'FAMILY_NAME'    : FAMILY_NAME,
-                        'START_LOCATION' : '집',
-                        'DESTI_LOCATION' : '회사',
-                        'STATUS'         : '출근하는'
-                        }
-    # except_location 
-    elif now_X not in numpy.arange(small_X, big_X) and now_Y not in numpy.arange(small_Y, big_Y):
+    elif now_home ==1 and now_company ==0:
+        LOCATION = '집 오는 중'
+    
+ 
+    ## defined off work
+    elif (now_home ==1 and now_company ==0) or (ML_result[0][0] == 1 and ML_result[0][1] == 0):
+        context = { 'FAMILY_NAME'    : FAMILY_NAME,
+                    'START_LOCATION' : '회사',
+                    'DESTI_LOCATION' : '집',
+                    'STATUS'         : '퇴근하는'
+                    }
+    ## defined on work
+    elif (now_home ==0 and now_company ==1) or (ML_result[0][0] == 0 and ML_result[0][1] == 1):
+        context = { 'FAMILY_NAME'    : FAMILY_NAME,
+                    'START_LOCATION' : '집',
+                    'DESTI_LOCATION' : '회사',
+                    'STATUS'         : '출근하는'
+                    }
+
+    # except_location
+    elif not(small_X < now_X < big_X) and not(small_Y < now_Y < big_Y):
         context     = { 'FAMILY_NAME'    : FAMILY_NAME}
     else:
         context     = { 'FAMILY_NAME'    : FAMILY_NAME}
@@ -82,7 +90,7 @@ def location(request):
     # make Alert log for parent
     Alert.objects.create(user_id_id=user_id,alertType=0)
     return JsonResponse(result)
-    
+
 
 # inform.home
 def alert(request):
@@ -145,17 +153,20 @@ def test_location(request):
     now_X        = now_location.geoX
     now_Y        = now_location.geoY
     now_time     = int(now_location.timeStamp.hour * 60) + int(now_location.timeStamp.minute)
+    now_home     = now_location.onHomeRoad
+    now_company  = now_location.onCompanyRoad
+    
     home_X       = set_location.values()[0]['homeX']
     home_Y       = set_location.values()[0]['homeY']
     company_X    = set_location.values()[0]['companyX']
     company_Y    = set_location.values()[0]['companyY']
+
     # To use numpy's 'arrange' func
     big_X        = max(home_X, company_X)
     small_X      = min(home_X, company_Y)
     big_Y        = max(home_Y, company_Y)
     small_Y      = min(home_Y, company_Y)
     LOCATION     = ''
-
     # To use randomForest
     train        = pandas.read_csv('static/train.csv')
     X            = train[['geoX', 'geoY', 'time']]
@@ -164,19 +175,21 @@ def test_location(request):
     forest.fit(X,Y)
     test         = numpy.array((now_X, now_Y, now_time)).reshape(1,3)
     ML_result    = forest.predict(test)
+    
 
     if abs(now_X - home_X)<0.001 and abs(now_Y - home_Y)<0.0015:
         LOCATION = '집'
     elif abs(now_X - company_X)<0.001 and abs(now_Y - company_Y)<0.0015:
         LOCATION = '회사'
-    elif ML_result[0][0] == 1 and ML_result[0][1] == 0:
+    elif (now_home ==1 and now_company ==0) or (ML_result[0][0] == 1 and ML_result[0][1] == 0):
         LOCATION = '집 오는 중'
-    elif ML_result[0][0] == 0 and ML_result[0][0] == 1:
-        LOCATION = '회사 가는 중'
-    elif now_X not in numpy.arange(small_X, big_X) and now_Y not in numpy.arange(small_Y, big_Y):
+    elif (now_home ==0 and now_company ==1) or (ML_result[0][0] == 0 and ML_result[0][1] == 1):
+        LOCATION = '회사 오는 중'  
+    elif not(small_X < now_X < big_X) and not(small_Y < now_Y < big_Y):
         print('외출 중이에요')
     else:
-        print('예외 상황')
+        print('외출 중이에요')
+    print('error?')
     print(LOCATION)
 
     context = {}

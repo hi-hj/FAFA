@@ -18,8 +18,10 @@
 <img src="https://img.shields.io/badge/Amazon%20Linux-2.9.16-yellow?style=flat-square" />
 <img src="https://img.shields.io/badge/AWS-EB-yellow?style=flat-square" />
 </div>
+<br/>
 
-
+[Front-End](https://github.com/HYUcoolguy/FAFA/blob/main/Front-End/README.md) 문서에서 애플리케이션의 설명 및 실행 방법과<br/>
+[Back-End](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/README.md) 문서에서 NUGU play 및 전체 구조를 확인하세요.
 - - -
 
 
@@ -96,6 +98,8 @@ NUGU speaker를 사용하는 자녀
 #### :man: GUI (Graphical User Interface)
 
 Application을 사용하는 부모
+
+자세한 화면 설명은 [여기](https://github.com/HYUcoolguy/FAFA/blob/main/Front-End/README.md)서 확인하세요!
 
 *최근 위치 정보는 100m 이동 시마다 자동으로 서버에 전송*
 
