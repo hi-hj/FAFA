@@ -109,7 +109,7 @@ Application을 사용하는 부모
 
 #### :fire: Contributors
 
-[박형진](https://github.com/HYUcoolguy)  : Back-end 개발 및 배포 (Django / DRF)
+[박형진](https://github.com/HYUcoolguy)  : Back-end 개발 및 서버 배포 (Django / AWS)
 
 [이준석](https://github.com/junslee0912) : ML 기법 활용 및 데이터셋 수집
 
