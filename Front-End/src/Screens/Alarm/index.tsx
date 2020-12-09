@@ -10,7 +10,7 @@ import AlertButton from '~/Components/AlertButton';
 const Container = Styled.View`
     flex: 1;
     align-items: center;
-    background-color: #faf9f5;
+    background-color: #fbf6f0;
 `;
 
 const FormContainer = Styled.View`
@@ -18,6 +18,9 @@ const FormContainer = Styled.View`
   width: 100%;
 `;
 
+const Blank = Styled.Text`
+display : none;
+`;
 
 
 const StyleButton = Styled.TouchableOpacity`
@@ -64,6 +67,7 @@ const Alarm =  ({ navigation }: Props) => {
     }
 
     
+    
 
     useEffect(() => {
        
@@ -71,7 +75,7 @@ const Alarm =  ({ navigation }: Props) => {
           logout: _logout,
         });   
 
-        fetch('http://fafa-dev.ap-northeast-2.elasticbeanstalk.com/alert/')
+        fetch('http://back-end.ap-northeast-2.elasticbeanstalk.com/alert/')
         .then(res => {
             // response 처리
             // 응답을 JSON 형태로 파싱
@@ -79,6 +83,7 @@ const Alarm =  ({ navigation }: Props) => {
          })
         .then(data => {
           const newData = data.slice(-10)
+          console.log(newData);
           setalarmData(newData.reverse());
         })
         .catch(err => {
@@ -96,12 +101,17 @@ const Alarm =  ({ navigation }: Props) => {
         { alarmData && (
             <FormContainer>
             { alarmData.map((alarm:AlarmD, index:number) => (
-                
-            <AlertButton
+              (index%2==0)?
+              <AlertButton
+            type={alarm.alertType}
             key={`alarm-${index}`}
             label1 = {_alert(alarm.alertType)}
             label2 = {_time(alarm.timeStamp)}
             />
+              :
+              <Blank
+              key={`alarm-${index}`}
+              >hi</Blank>
              ))}
         </FormContainer>
         )}     

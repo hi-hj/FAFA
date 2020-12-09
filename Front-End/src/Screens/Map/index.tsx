@@ -98,10 +98,10 @@ const Map = ({ navigation }:Props) => {
 
   const fetchCurrentData = (data: any, num: any) => {
     const cnum = (num==1) ? 1 : 4;
-    const url = "http://fafa-dev.ap-northeast-2.elasticbeanstalk.com/add_location/"+cnum+"/";
+    const url = "http://back-end.ap-northeast-2.elasticbeanstalk.com/add_location/";
 
     fetch(url, {
-      method: 'PUT', // or 'PUT'
+      method: 'POST', // or 'PUT'
       headers: {
           'Content-Type': 'application/json',
         },
@@ -118,7 +118,7 @@ const Map = ({ navigation }:Props) => {
 
   const fetchHCData = (data: any, num: any) => {
     const cnum = (num==1) ? 1 : 3;
-    const url = "http://fafa-dev.ap-northeast-2.elasticbeanstalk.com/set_location/"+cnum+"/";
+    const url = "http://back-end.ap-northeast-2.elasticbeanstalk.com/set_location/"+cnum+"/";
     fetch(url, {
       method: 'PUT', // or 'PUT'
       headers: {
