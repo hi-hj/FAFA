@@ -20,7 +20,7 @@
 </div>
 <br/>
 
-[Front-End](https://github.com/HYUcoolguy/FAFA/blob/main/Front-End/README.md) 문서에서 애플리케이션 실행 방법과<br/>
+[Front-End](https://github.com/HYUcoolguy/FAFA/blob/main/Front-End/README.md) 문서에서 애플리케이션의 설명 및 실행 방법과<br/>
 [Back-End](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/README.md) 문서에서 NUGU play 및 전체 구조를 확인하세요.
 - - -
 
