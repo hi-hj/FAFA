@@ -20,7 +20,7 @@
 </div>
 <br/>
 
-[Front-End](https://github.com/HYUcoolguy/FAFA/blob/main/Front-End/README.md) 문서에서 애플리케이션 실행 방법과<br/>
+[Front-End](https://github.com/HYUcoolguy/FAFA/blob/main/Front-End/README.md) 문서에서 애플리케이션의 설명 및 실행 방법과<br/>
 [Back-End](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/README.md) 문서에서 NUGU play 및 전체 구조를 확인하세요.
 - - -
 
@@ -99,6 +99,8 @@ NUGU speaker를 사용하는 자녀
 
 Application을 사용하는 부모
 
+자세한 화면 설명은 [여기](https://github.com/HYUcoolguy/FAFA/blob/main/Front-End/README.md)서 확인하세요!
+
 *최근 위치 정보는 100m 이동 시마다 자동으로 서버에 전송*
 
 ![document/src/GUI.png](document/src/GUI.png)
@@ -107,7 +109,7 @@ Application을 사용하는 부모
 
 #### :fire: Contributors
 
-[박형진](https://github.com/HYUcoolguy)  : Back-end 개발 및 배포 (Django / DRF)
+[박형진](https://github.com/HYUcoolguy)  : Back-end 개발 및 서버 배포 (Django / AWS)
 
 [이준석](https://github.com/junslee0912) : ML 기법 활용 및 데이터셋 수집
 

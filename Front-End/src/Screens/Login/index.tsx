@@ -68,7 +68,7 @@ const [username, setName] = useState("")
             if(username!="father"&& username!="mother"){
               return 0;
             }
-            fetch('http://fafa-dev.ap-northeast-2.elasticbeanstalk.com/login', {
+            fetch('http://back-end.ap-northeast-2.elasticbeanstalk.com/login', {
             method: 'POST', // or 'PUT'
             headers: {
           'Content-Type': 'application/json',
