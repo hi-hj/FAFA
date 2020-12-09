@@ -72,7 +72,6 @@ def location(request):
                     'DESTI_LOCATION' : '회사',
                     'STATUS'         : '출근하는'
                     }
-
     # except_location
     elif not(small_X < now_X < big_X) and not(small_Y < now_Y < big_Y):
         context     = { 'FAMILY_NAME'    : FAMILY_NAME}
@@ -144,8 +143,17 @@ def login(request):
 
 ##### TEST IN LOCAL #####
 def test_location(request):
-    now_location = Location.objects.filter(user_id=1).last()
-    set_location = SetLocation.objects.filter(user_id=1)
+
+    #nugu_body    = json.loads(request.body, encoding='utf-8')
+    FAMILY_NAME  = '아빠'
+    #nugu_body.get('action').get('parameters').get('FAMILY_NAME').get('value')
+   # GET data from database
+    user_id      = User.objects.filter(role=FAMILY_NAME).values()[0]['id']
+    print(user_id)
+
+
+    now_location = Location.objects.filter(user_id=user_id).last()
+    set_location = SetLocation.objects.filter(user_id=user_id)
     now_X        = now_location.geoX
     now_Y        = now_location.geoY
     now_time     = int(now_location.timeStamp.hour * 60) + int(now_location.timeStamp.minute)
