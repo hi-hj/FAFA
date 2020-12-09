@@ -58,10 +58,6 @@ def location(request):
                     }
 
     # between_location
-    elif now_home ==1 and now_company ==0:
-        LOCATION = '집 오는 중'
-    
- 
     ## defined off work
     elif (now_home ==1 and now_company ==0) or (ML_result[0][0] == 1 and ML_result[0][1] == 0):
         context = { 'FAMILY_NAME'    : FAMILY_NAME,
