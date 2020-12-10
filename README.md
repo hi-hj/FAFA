@@ -22,6 +22,8 @@
 
 [Front-End](https://github.com/HYUcoolguy/FAFA/blob/main/Front-End/README.md) 문서에서 애플리케이션의 설명 및 실행 방법과<br/>
 [Back-End](https://github.com/HYUcoolguy/FAFA/blob/main/Back-End/README.md) 문서에서 NUGU play 및 전체 구조를 확인하세요.
+
+[Tech Blog](https://www.notion.so/Connect-to-Parents-FAFA-06fe4beac6ba45a0800b35bb5d1fdb3b)에서 Machine Learning 관련 상세 내용을 확인할 수 있습니다.
 - - -
 
 
@@ -107,7 +109,20 @@ Application을 사용하는 부모
 
 ---
 
-#### :fire: Contributors
+### :tv: Video
+
+[Demo](https://youtu.be/iiE26_AL2y0) 
+
+[![Demo](https://img.youtube.com/vi/iiE26_AL2y0/0.jpg)](https://youtu.be/iiE26_AL2y0)
+
+
+[Presentation](https://youtu.be/ittHCHFu2MM) 
+
+[![Presentation](https://img.youtube.com/vi/ittHCHFu2MM/0.jpg)](https://youtu.be/ittHCHFu2MM)
+
+- - -
+
+### :fire: Contributors
 
 [박형진](https://github.com/HYUcoolguy)  : Back-end 개발 및 서버 배포 (Django / AWS)
 
