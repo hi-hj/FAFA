@@ -116,7 +116,7 @@ Application을 사용하는 부모
 
 - - -
 
-#### :fire: Contributors
+### :fire: Contributors
 
 [박형진](https://github.com/HYUcoolguy)  : Back-end 개발 및 서버 배포 (Django / AWS)
 
