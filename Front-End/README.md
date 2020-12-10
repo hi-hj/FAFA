@@ -12,6 +12,9 @@
 ### :smile: 설치
 ```bash
 $ npm install
+$ cd ios
+$ pod install
+$ cd ..
 $ react-native run-ios
 ```
 
