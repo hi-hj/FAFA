@@ -118,7 +118,7 @@ Application을 사용하는 부모
 
 [Presentation](https://youtu.be/ittHCHFu2MM)
 
-해당 문서는 [document/Presentation.pdf](https://github.com/HYUcoolguy/FAFA/document/Presentation.pdf)에서 확인 가능합니다.
+해당 문서는 [document/Presentation.pdf](https://github.com/HYUcoolguy/FAFA/blob/main/document/Presentation.pdf)에서 확인 가능합니다.
 
 [![Presentation](https://img.youtube.com/vi/ittHCHFu2MM/0.jpg)](https://youtu.be/ittHCHFu2MM)
 
