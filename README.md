@@ -111,14 +111,14 @@ Application을 사용하는 부모
 
 ### :tv: Video
 
-Demo
+[Demo](https://youtu.be/iiE26_AL2y0) 
 
-[![Demo](https://img.youtube.com/vi/iiE26_AL2y0/0.jpg)](https://youtu.be/iiE26_AL2y0?t=0s)
+[![Demo](https://img.youtube.com/vi/iiE26_AL2y0/0.jpg)](https://youtu.be/iiE26_AL2y0)
 
 
-Presentation
+[Presentation](https://youtu.be/ittHCHFu2MM) 
 
-[![Presentation](https://img.youtube.com/vi/ittHCHFu2MM/0.jpg)](https://youtu.be/ittHCHFu2MM?t=0s)
+[![Presentation](https://img.youtube.com/vi/ittHCHFu2MM/0.jpg)](https://youtu.be/ittHCHFu2MM)
 
 - - -
 
