@@ -186,7 +186,7 @@ Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 �
     |Prompt  |`FAMILY_NAME`  |fix|`LOCATION` | fix|
 
     3.2 between_location : 최근 위치가 회사-집 사이
-    > 출근/퇴근은 ML의 randomForest 활용하여 분류
+    > **출근/퇴근은 ML의 randomForest 활용하여 예측**
     
     ~~~json
     # Using randomForest
@@ -203,6 +203,7 @@ Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 �
     ~~~
     
     ~~~json
+    # case of onHomeRoad is 1
     "output" :{ 
         "FAMILY_NAME"    : "엄마",
         "START_LOCATION" : "회사",
