@@ -98,7 +98,8 @@ def alert(request):
     result['version'] = nugu_body.get('version')
     result['resultCode'] = 'OK'
     result['output'] = context
-    # make Alert log for parent
+    # make Alert log for parent (save twice)
+    Alert.objects.create(user_id_id=user_id,alertType=1)
     Alert.objects.create(user_id_id=user_id,alertType=1)
     return JsonResponse(result)
 
@@ -152,8 +153,8 @@ def test_location(request):
     print(user_id)
 
 
-    now_location = Location.objects.filter(user_id=user_id).last()
-    set_location = SetLocation.objects.filter(user_id=user_id)
+    now_location = Location.objects.filter(user_id=1).last()
+    set_location = SetLocation.objects.filter(user_id=1)
     now_X        = now_location.geoX
     now_Y        = now_location.geoY
     now_time     = int(now_location.timeStamp.hour * 60) + int(now_location.timeStamp.minute)
