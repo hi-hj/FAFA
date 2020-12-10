@@ -187,7 +187,21 @@ Back-end URL : http://fafa-dev.ap-northeast-2.elasticbeanstalk.com (2020.12.08 �
 
     3.2 between_location : 최근 위치가 회사-집 사이
     > 출근/퇴근은 ML의 randomForest 활용하여 분류
-
+    
+    ~~~json
+    # Using randomForest
+    train        = pandas.read_csv('static/train.csv')
+    X            = train[["geoX", "geoY", "time"]]
+    Y            = train[["onHomeRoad", "onCompanyRoad"]]
+    forest       = RandomForestClassifier(n_estimators=100)
+    forest.fit(X,Y)
+    test         = numpy.array((now_X, now_Y, now_time)).reshape(1,3)
+    
+    # onHomeRoad==1 : off-work
+    # onCompanyRoad==1 : on-work
+    ML_result    = forest.predict(test)
+    ~~~
+    
     ~~~json
     "output" :{ 
         "FAMILY_NAME"    : "엄마",
